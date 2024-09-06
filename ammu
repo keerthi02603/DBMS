@@ -1,0 +1,179 @@
+rgukt-basar@ammukeerthi:~$ sudo mysql
+[sudo] password for rgukt-basar: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.35-0ubuntu0.22.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| student            |
+| sys                |
++--------------------+
+5 rows in set (0.01 sec)
+
+mysql> use student;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> create table ammu(id char(10),name varchar(20),marks integer,grade char);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert  into ammu values('b200374','keerthi',92,'x');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into ammu values('b200389','uday',80,'a');
+Query OK, 1 row affected (0.01 sec)
+insert
+mysql> insert into ammu values('b200492','sai',70,'b');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into ammu values('b200999','nani',67,'c');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into ammu values('b200887','sucharitha',29,'r');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into ammu values('b200666','bhargavi',50,'d');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select *from ammu;p
++---------+------------+-------+-------+
+| id      | name       | marks | grade |
++---------+------------+-------+-------+
+| b200374 | keerthi    |    92 | x     |
+| b200389 | uday       |    80 | a     |
+| b200492 | sai        |    70 | b     |
+| b200999 | nani       |    67 | c     |
+| b200887 | sucharitha |    29 | r     |
+| b200666 | bhargavi   |    50 | d     |
++---------+------------+-------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select id from ammu where grade='c';
++---------+
+| id      |
++---------+
+| b200999 |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select id from ammu where marks >70;
++---------+
+| id      |
++---------+
+| b200374 |
+| b200389 |
++---------+
+2 rows in set (0.00 sec)
+
+mysql> order by name asc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order by name asc' at line 1
+mysql> select avg(marks) from ammu;
++------------+
+| avg(marks) |
++------------+
+|    64.6667 |
++------------+
+1 row in set (0.01 sec)
+
+mysql> select id,name from ammu where name like 's%';
++---------+------------+
+| id      | name       |
++---------+------------+
+| b200492 | sai        |
+| b200887 | sucharitha |
++---------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select name from ammu where marks=(select min(marks) from ammu);
++------------+
+| name       |
++------------+
+| sucharitha |
++------------+
+1 row in set (0.01 sec)
+
+mysql> where (marks%2)=0;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where (marks%2)=0' at line 1
+mysql> select max(marks),min(marks) from ammu;
++------------+------------+
+| max(marks) | min(marks) |
++------------+------------+
+|         92 |         29 |
++------------+------------+
+1 row in set (0.00 sec)
+
+mysql> alter table ammu add cgpa int(10);
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> select * from ammu;
++---------+------------+-------+-------+------+
+| id      | name       | marks | grade | cgpa |
++---------+------------+-------+-------+------+
+| b200374 | keerthi    |    92 | x     | NULL |
+| b200389 | uday       |    80 | a     | NULL |
+| b200492 | sai        |    70 | b     | NULL |
+| b200999 | nani       |    67 | c     | NULL |
+| b200887 | sucharitha |    29 | r     | NULL |
+| b200666 | bhargavi   |    50 | d     | NULL |
+| b200374 | keerthi    |    92 | x     | NULL |
+| b200389 | uday       |    80 | a     | NULL |
++---------+------------+-------+-------+------+
+8 rows in set (0.00 sec)
+
+mysql>  update ammu set id='b200492' where name='chinnu';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> select * from ammu;
++---------+------------+-------+-------+------+
+| id      | name       | marks | grade | cgpa |
++---------+------------+-------+-------+------+
+| b200374 | keerthi    |    92 | x     | NULL |
+| b200389 | uday       |    80 | a     | NULL |
+| b200492 | sai        |    70 | b     | NULL |
+| b200999 | nani       |    67 | c     | NULL |
+| b200887 | sucharitha |    29 | r     | NULL |
+| b200666 | bhargavi   |    50 | d     | NULL |
++---------+------------+-------+-------+------+
+8 rows in set (0.00 sec)
+
+mysql>  update ammu set id='b200599' where name='nani';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from ammu;
++---------+------------+-------+-------+------+
+| id      | name       | marks | grade | cgpa |
++---------+------------+-------+-------+------+
+| b200374 | keerthi    |    92 | x     | NULL |
+| b200389 | uday       |    80 | a     | NULL |
+| b200492 | sai        |    70 | b     | NULL |
+| b200599 | nani       |    67 | c     | NULL |
+| b200887 | sucharitha |    29 | r     | NULL |
+| b200666 | bhargavi   |    50 | d     | NULL |
+| b200374 | keerthi    |    92 | x     | NULL |
+| b200389 | uday       |    80 | a     | NULL |
++---------+------------+-------+-------+------+
+8 rows in set (0.00 sec)
+
+mysql> 
+
+ 
+
+

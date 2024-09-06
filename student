@@ -1,0 +1,102 @@
+user@chaithanya:~$ sudo mysql -u root -p
+[sudo] password for user: 
+Sorry, try again.
+[sudo] password for user: 
+Sorry, try again.
+[sudo] password for user: 
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 15
+Server version: 8.0.35-0ubuntu0.20.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| student            |
+| sys                |
++--------------------+
+5 rows in set (0.01 sec)
+
+mysql> use student;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> insert into student value('b200876','pinki',60,'d');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select *from student;
++---------+---------+-------+-------+
+| sid     | name    | marks | grade |
++---------+---------+-------+-------+
+| b200874 | geetha |    99 | x     |
+| b201620 | keerthi |   100 | x     |
+| b200735 | shreya  |    80 | b     |
+| b200632 | ramya   |    30 | r     |
+| b200876 | ammu  |    60 | d     |
++---------+---------+-------+-------+
+5 rows in set (0.00 sec)
+
+mysql> update student set sid='b200874' where sid='b200811';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> select *from student;
++---------+---------+-------+-------+
+| sid     | name    | marks | grade |
++---------+---------+-------+-------+
+| b200874 | geetha |    99 | x     |
+| b201620 | keerthi |   100 | x     |
+| b200735 | shreya  |    80 | b     |
+| b200632 | ramya   |    30 | r     |
+| b200876 | ammu   |    60 | d     |
++---------+---------+-------+-------+
+5 rows in set (0.00 sec)
+
+mysql> update student set sid='b200811'where sid='b200874';
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from student;
++---------+---------+-------+-------+
+| sid     | name    | marks | grade |
++---------+---------+-------+-------+
+| b200811 | geetha |    99 | x     |
+| b201620 | keerthi |   100 | x     |
+| b200735 | shreya  |    80 | b     |
+| b200632 | ramya   |    30 | r     |
+| b200876 | ammu |    60 | d     |
++---------+---------+-------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select sid from student where grade=d;
+ERROR 1054 (42S22): Unknown column 'd' in 'where clause'
+mysql> select sid from student where grade='d';
++---------+
+| sid     |
++---------+
+| b200876 |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select name from student where grade='x';
++---------+
+| name    |
++---------+
+| geetha |
+| keerthi |
++---------+
+2 rows in set (0.00 sec)
+

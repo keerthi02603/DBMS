@@ -1,0 +1,3136 @@
+mysql> select * from sailor;
+ERROR 1046 (3D000): No database selected
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| student            |
+| sys                |
++--------------------+
+5 rows in set (0.01 sec)
+
+mysql> use student;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select * from sailor;
++------+---------+--------+------+
+| id   | name    | rating | age  |
++------+---------+--------+------+
+|   22 | dustin  |      7 |   45 |
+|   29 | brutus  |      1 |   33 |
+|   31 | lubber  |      8 | 55.5 |
+|   32 | andy    |      8 | 25.5 |
+|   58 | rusty   |     10 |   35 |
+|   64 | horatio |      7 |   35 |
+|   71 | zorba   |     10 |   16 |
+|   74 | horatio |      9 |   40 |
+|   85 | art     |      3 | 25.5 |
+|   95 | bob     |      3 | 63.5 |
++------+---------+--------+------+
+10 rows in set (0.00 sec)
+
+mysql> select count(sailor);
+ERROR 1054 (42S22): Unknown column 'sailor' in 'field list'
+mysql> select count(names) from sailor;
+ERROR 1054 (42S22): Unknown column 'names' in 'field list'
+mysql> select count('names') from sailor;
++----------------+
+| count('names') |
++----------------+
+|             10 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select names from sailor where age>40;
+ERROR 1054 (42S22): Unknown column 'names' in 'field list'
+mysql> select 'names' from sailor where age>40;
++-------+
+| names |
++-------+
+| names |
+| names |
+| names |
++-------+
+3 rows in set (0.00 sec)
+
+mysql> select id from sailor where age>40;
++------+
+| id   |
++------+
+|   22 |
+|   31 |
+|   95 |
++------+
+3 rows in set (0.00 sec)
+
+mysql> select names from sailor where age>40;
+ERROR 1054 (42S22): Unknown column 'names' in 'field list'
+mysql> select name from sailor where age>40;
++--------+
+| name   |
++--------+
+| dustin |
+| lubber |
+| bob    |
++--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from boat;
++------+-----------+-------+
+| bid  | bname     | color |
++------+-----------+-------+
+|  101 | interleke | blue  |
+|  102 | interlake | red   |
+|  103 | clipper   | green |
+|  104 | marine    | red   |
++------+-----------+-------+
+4 rows in set (0.01 sec)
+
+mysql> select * from boat color;
++------+-----------+-------+
+| bid  | bname     | color |
++------+-----------+-------+
+|  101 | interleke | blue  |
+|  102 | interlake | red   |
+|  103 | clipper   | green |
+|  104 | marine    | red   |
++------+-----------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select color from boat;
++-------+
+| color |
++-------+
+| blue  |
+| red   |
+| green |
+| red   |
++-------+
+4 rows in set (0.00 sec)
+
+mysql> select color of boat where bname=interlake;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'of boat where bname=interlake' at line 1
+mysql> select color from boat where bname=interlake;
+ERROR 1054 (42S22): Unknown column 'interlake' in 'where clause'
+mysql> select * from boat where bname interlake=color;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'interlake=color' at line 1
+mysql> select color from boat=interlake;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '=interlake' at line 1
+mysql> select color from boat where name like interlake;
+ERROR 1054 (42S22): Unknown column 'name' in 'where clause'
+mysql> select color from boat where bname like interlake;
+ERROR 1054 (42S22): Unknown column 'interlake' in 'where clause'
+mysql> select select color from boat where name like 'interlake';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select color from boat where name like 'interlake'' at line 1
+mysql> select id,name from sailor where rating=8;
++------+--------+
+| id   | name   |
++------+--------+
+|   31 | lubber |
+|   32 | andy   |
++------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from sailor order by name rating limit 10;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'rating limit 10' at line 1
+mysql> select name from sailor order by  limit 10;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'limit 10' at line 1
+mysql> select name from sailor order by rating limit 10;
++---------+
+| name    |
++---------+
+| brutus  |
+| art     |
+| bob     |
+| dustin  |
+| horatio |
+| lubber  |
+| andy    |
+| horatio |
+| rusty   |
+| zorba   |
++---------+
+10 rows in set (0.00 sec)
+
+mysql> select count(sailor) where rating=3;
+ERROR 1054 (42S22): Unknown column 'sailor' in 'field list'
+mysql> select count('sailor') where rating=3;
+ERROR 1054 (42S22): Unknown column 'rating' in 'where clause'
+mysql> select count(sailor) where'rating'=3;
+ERROR 1054 (42S22): Unknown column 'sailor' in 'field list'
+mysql> select 'name' from sailor where rating=3;
++------+
+| name |
++------+
+| name |
+| name |
++------+
+2 rows in set (0.00 sec)
+
+mysql> select count(name) from sailor where rating=3;
++-------------+
+| count(name) |
++-------------+
+|           2 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select name from sailor where age is old;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'old' at line 1
+mysql> select name from sailor where age like old;
+ERROR 1054 (42S22): Unknown column 'old' in 'where clause'
+mysql> select 'name' from sailor where age like old;
+ERROR 1054 (42S22): Unknown column 'old' in 'where clause'
+mysql> select 'name' from sailor where age like 'old';
+Empty set (0.00 sec)
+
+mysql> select 'name' from sailor where age is 'old';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''old'' at line 1
+mysql> select 'name' from sailor where age='old';
+Empty set, 1 warning (0.00 sec)
+
+mysql> select max(age) from sailor;
++----------+
+| max(age) |
++----------+
+|     63.5 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select'name' max(age) from sailor;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'max(age) from sailor' at line 1
+mysql> select name from sailor where age=(select max(age) from sailor);
++------+
+| name |
++------+
+| bob  |
++------+
+1 row in set (0.00 sec)
+
+mysql> select 'name' max(rating) from sailor;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'max(rating) from sailor' at line 1
+mysql> select name from sailor where rating=(select max(rating) from sailor);
++-------+
+| name  |
++-------+
+| rusty |
+| zorba |
++-------+
+2 rows in set (0.00 sec)
+
+mysql> select bid from boat reserved by 'dustin';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'by 'dustin'' at line 1
+mysql> select * from reserver;
++------+------+------------+
+| id   | bid  | day        |
++------+------+------------+
+|   22 |  101 | 1998-10-10 |
+|   22 |   10 | 1998-10-10 |
+|   22 |  103 | 1998-10-08 |
+|   22 |  104 | 1998-10-07 |
+|   31 |  102 | 1998-11-10 |
+|   31 |  103 | 1998-11-06 |
+|   31 |  104 | 1998-11-12 |
+|   64 |  101 | 1998-09-05 |
+|   64 |  102 | 1998-09-08 |
+|   74 |  103 | 1998-09-08 |
++------+------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select bid from boat reserved by dustin;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'by dustin' at line 1
+mysql> select bid from boat where name='dustin';
+ERROR 1054 (42S22): Unknown column 'name' in 'where clause'
+mysql> select bid from boat where 'name'='dustin';
+Empty set (0.00 sec)
+
+mysql> select bid from boat where name like 'dustin';
+ERROR 1054 (42S22): Unknown column 'name' in 'where clause'
+mysql> select bid from boat where 'name' like 'dustin';
+Empty set (0.00 sec)
+mysql> select id from reserver where id=22;
++------+
+| id   |
++------+
+|   22 |
+|   22 |
+|   22 |
+|   22 |
++------+
+4 rows in set (0.00 sec)
+
+mysql> select color from boat where bname like 'inter%';
++-------+
+| color |
++-------+
+| blue  |
+| red   |
++-------+
+2 rows in set (0.00 sec)
+
+mysql> 
+ sudo mysql
+[sudo] password for rgukt-basar: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.35-0ubuntu0.22.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| student            |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> use student;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> alter table sailor add constraint primary key(id);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table reserve add constraint foreign key(bid) references boat(bid)
+    -> alter table reserve add constraint foreign key(bid) references boat(bid);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'alter table reserve add constraint foreign key(bid) references boat(bid)' at line 2
+mysql> alter table reserver add constraint foreign key(bid)references boat(bid);
+ERROR 1822 (HY000): Failed to add the foreign key constraint. Missing index for constraint 'reserver_ibfk_1' in the referenced table 'boat'
+mysql> alter table 'reserver' add constraint foreign key(bid)references boat(bid);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''reserver' add constraint foreign key(bid)references boat(bid)' at line 1
+mysql> alter table reserver add constraint foreign key(id)references boat(bid);
+ERROR 1822 (HY000): Failed to add the foreign key constraint. Missing index for constraint 'reserver_ibfk_1' in the referenced table 'boat'
+mysql> alter table 'reserver' add constraint foreign key(id)references 'boat'(bid);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''reserver' add constraint foreign key(id)references 'boat'(bid)' at line 1
+mysql> insert into sailor values(74,"ammu",10,25);
+ERROR 1062 (23000): Duplicate entry '74' for key 'sailor.PRIMARY'
+mysql> alter table reserver add foreign key(id) references sailor(id);
+Query OK, 10 rows affected (0.04 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> insert into reserver values(31,102,19998/11/10);
+ERROR 1292 (22007): Incorrect date value: '181.800000000000000000' for column 'day' at row 1
+mysql> insert into reserver values(31,102,1998/11/10);
+ERROR 1292 (22007): Incorrect date value: '18.163636363600000000' for column 'day' at row 1
+mysql> insert into reserver values(31,102,1998/11/12);
+ERROR 1292 (22007): Incorrect date value: '15.136363636333333333' for column 'day' at row 1
+mysql> alter table reserver add constraint foreign key(id)references boat(bid);
+ERROR 1822 (HY000): Failed to add the foreign key constraint. Missing index for constraint 'reserver_ibfk_2' in the referenced table 'boat'
+mysql> insert into reserver values(31,102,1998-11-10);
+ERROR 1292 (22007): Incorrect date value: '1977' for column 'day' at row 1
+mysql> insert into reserver values(31,102,'1998-11-10');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from reserver;
++------+------+------------+
+| id   | bid  | day        |
++------+------+------------+
+|   22 |  101 | 1998-10-10 |
+|   22 |   10 | 1998-10-10 |
+|   22 |  103 | 1998-10-08 |
+|   22 |  104 | 1998-10-07 |
+|   31 |  102 | 1998-11-10 |
+|   31 |  103 | 1998-11-06 |
+|   31 |  104 | 1998-11-12 |
+|   64 |  101 | 1998-09-05 |
+|   64 |  102 | 1998-09-08 |
+|   74 |  103 | 1998-09-08 |
+|   31 |  102 | 1998-11-10 |
++------+------+------------+
+11 rows in set (0.00 sec)
+
+mysql> alter table reserver drop(31,102,'1998-11-10');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(31,102,'1998-11-10')' at line 1
+mysql> select color from boat where bid=(select bid from reserver where id=74);
++-------+
+| color |
++-------+
+| green |
++-------+
+1 row in set (0.01 sec)
+
+mysql> select * from reserver;
++------+------+------------+
+| id   | bid  | day        |
++------+------+------------+
+|   22 |  101 | 1998-10-10 |
+|   22 |   10 | 1998-10-10 |
+|   22 |  103 | 1998-10-08 |
+|   22 |  104 | 1998-10-07 |
+|   31 |  102 | 1998-11-10 |
+|   31 |  103 | 1998-11-06 |
+|   31 |  104 | 1998-11-12 |
+|   64 |  101 | 1998-09-05 |
+|   64 |  102 | 1998-09-08 |
+|   74 |  103 | 1998-09-08 |
+|   31 |  102 | 1998-11-10 |
++------+------+------------+
+11 rows in set (0.00 sec)
+
+mysql> select * from boat;
++------+-----------+-------+
+| bid  | bname     | color |
++------+-----------+-------+
+|  101 | interlake | blue  |
+|  102 | interlake | red   |
+|  103 | clipper   | green |
+|  104 | marine    | red   |
++------+-----------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select color from boat where bid=(select bid from reserver where id=64);
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> select color from boat where bid=any(select bid from reserver where id=64);
++-------+
+| color |
++-------+
+| blue  |
+| red   |
++-------+
+2 rows in set (0.00 sec)
+
+mysql> select color from boat where bid=in(select bid from reserver where id=64);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'in(select bid from reserver where id=64)' at line 1
+mysql> select color from boat where bid=notin(select bid from reserver where id=64);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select bid from reserver where id=64)' at line 1
+mysql> select color from boat where bid=In(select bid from reserver where id=64);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'In(select bid from reserver where id=64)' at line 1
+mysql> select color from boat where bid=In(select bid from reserver where id=31);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'In(select bid from reserver where id=31)' at line 1
+mysql> select color from boat where bid=In(select bid from reserver where id=22);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'In(select bid from reserver where id=22)' at line 1
+mysql> select color from boat where bid=any(select bid from reserver where id=22);
++-------+
+| color |
++-------+
+| blue  |
+| green |
+| red   |
++-------+
+3 rows in set (0.00 sec)
+
+mysql> select color from boat where bid=any(select bid from reserver where id=31);
++-------+
+| color |
++-------+
+| red   |
+| green |
+| red   |
++-------+
+3 rows in set (0.00 sec)
+
+mysql> select color from boat reserves where name like 'lubber';
+ERROR 1054 (42S22): Unknown column 'name' in 'where clause'
+mysql> select color from boat where id =in(select id from reserver where id)=in(select 'name' from sailor where id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'in(select id from reserver where id)=in(select 'name' from sailor where id)' at line 1
+mysql> select color from boat where bid Not INy(select bid from reserver where id=31);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'INy(select bid from reserver where id=31)' at line 1
+mysql> select color from boat where bid Not IN(select bid from reserver where id=31);
++-------+
+| color |
++-------+
+| blue  |
++-------+
+1 row in set (0.00 sec)
+
+mysql> select color from boat where bid Not IN(select bid from reserver where id=22);
++-------+
+| color |
++-------+
+| red   |
++-------+
+1 row in set (0.00 sec)
+
+mysql> select color from boat where bid Not IN(select bid from reserver where name like 'lubber');
+ERROR 1054 (42S22): Unknown column 'name' in 'where clause'
+mysql> select color from boat where bid Not IN(select bid from reserver where name like 'lubber');
+mysql> select color from boat where bid in(select bid from reserver where id in(select id from sailor where name='lubber'));
++-------+
+| color |
++-------+
+| red   |
+| green |
+| red   |
++-------+
+3 rows in set (0.01 sec)
+
+mysql> select color from boat where bid in(select bid from reserver where id in(select id from sailor where name'dustin';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''dustin'' at line 1
+mysql> select color from boat where bid in(select bid from reserver where id in(select id from sailor where name'dustin');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''dustin')' at line 1
+mysql> select color from boat where bid in(select bid from reserver where id in(select id from sailor where name='dustin');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select color from boat where bid in(select bid from reserver where id in(select id from sailor where name='dustin');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select * from sailor;
++----+---------+--------+------+
+| id | name    | rating | age  |
++----+---------+--------+------+
+| 22 | dustin  |      7 |   45 |
+| 29 | brutus  |      1 |   33 |
+| 31 | lubber  |      8 | 55.5 |
+| 32 | andy    |      8 | 25.5 |
+| 58 | rusty   |     10 |   35 |
+| 64 | horatio |      7 |   35 |
+| 71 | zorba   |     10 |   16 |
+| 74 | horatio |      9 |   40 |
+| 85 | art     |      3 | 25.5 |
+| 95 | bob     |      3 | 63.5 |
++----+---------+--------+------+
+10 rows in set (0.00 sec)
+
+mysql> select * from reserver;
++------+------+------------+
+| id   | bid  | day        |
++------+------+------------+
+|   22 |  101 | 1998-10-10 |
+|   22 |   10 | 1998-10-10 |
+|   22 |  103 | 1998-10-08 |
+|   22 |  104 | 1998-10-07 |
+|   31 |  102 | 1998-11-10 |
+|   31 |  103 | 1998-11-06 |
+|   31 |  104 | 1998-11-12 |
+|   64 |  101 | 1998-09-05 |
+|   64 |  102 | 1998-09-08 |
+|   74 |  103 | 1998-09-08 |
+|   31 |  102 | 1998-11-10 |
++------+------+------------+
+11 rows in set (0.00 sec)
+
+mysql> select * from boat;
++------+-----------+-------+
+| bid  | bname     | color |
++------+-----------+-------+
+|  101 | interlake | blue  |
+|  102 | interlake | red   |
+|  103 | clipper   | green |
+|  104 | marine    | red   |
++------+-----------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select color from boat where bid in(select bid from reserver where id in(select id from sailor where name='dustin'));
++-------+
+| color |
++-------+
+| blue  |
+| green |
+| red   |
++-------+
+3 rows in set (0.00 sec)
+
+mysql> delete from reserver where reserver bid=31;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'bid=31' at line 1
+mysql> delete from reserver where reserver id=31;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'id=31' at line 1
+mysql> DELETE FROM reserver
+    -> frp;
+Query OK, 11 rows affected (0.01 sec)
+
+mysql> select * from reserver;
+Empty set (0.00 sec)
+
+mysql> select * from reserver;
+Empty set (0.00 sec)
+ mysql>select count(bid) from boat where bid NOT IN(select count(id) from student
+t where id NOT IN(select count(id) from sailor));
++------------+
+| count(bid) |
++------------+
+|          4 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> 
+mysql> select distinct(id) from student;
++------+
+| id   |
++------+
+|   22 |
+|   31 |
+|   64 |
+|   74 |
++------+
+4 rows in set (0.00 sec)
+
+mysql> select id from student;
++------+
+| id   |
++------+
+|   22 |
+|   22 |
+|   22 |
+|   22 |
+|   31 |
+|   31 |
+|   31 |
+|   64 |
+|   64 |
+|   74 |
++------+
+10 rows in set (0.00 sec)
+
+mysql> select name from sailor;
++---------+
+| name    |
++---------+
+| dustin  |
+| brutus  |
+| lubber  |
+| andy    |
+| rusty   |
+| horatio |
+| zorba   |
+| horatio |
+| art     |
+| bob     |
++---------+
+10 rows in set (0.00 sec)
+
+mysql> select name from sailor where rating >7;
++---------+
+| name    |
++---------+
+| lubber  |
+| andy    |
+| rusty   |
+| zorba   |
+| horatio |
++---------+
+5 rows in set (0.00 sec)
+
+mysql> select name from sailor where rating >7 and age <50;
++---------+
+| name    |
++---------+
+| andy    |
+| rusty   |
+| zorba   |
+| horatio |
++---------+
+4 rows in set (0.00 sec)
+
+mysql> select id and name from sailor where age between 30 and 50;
++-------------+
+| id and name |
++-------------+
+|           0 |
+|           0 |
+|           0 |
+|           0 |
+|           0 |
++-------------+
+5 rows in set, 5 warnings (0.00 sec)
+
+mysql> select id and name from sailor where age >30 and <50;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '<50' at line 1
+mysql> select id and name from sailor where age <30>;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select id and name from sailor where age between 30 and 50;
++-------------+
+| id and name |
++-------------+
+|           0 |
+|           0 |
+|           0 |
+|           0 |
+|           0 |
++-------------+
+5 rows in set, 5 warnings (0.00 sec)
+
+mysql> select id,name from sailor where age between 30 and 50;
++----+---------+
+| id | name    |
++----+---------+
+| 22 | dustin  |
+| 29 | brutus  |
+| 58 | rusty   |
+| 64 | horatio |
+| 74 | horatio |
++----+---------+
+5 rows in set (0.00 sec)
+
+mysql> select id,name from sailor where name like 's%';
+Empty set (0.00 sec)
+
+mysql> select id,name from sailor where name like 'b%' length 3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'length 3' at line 1
+mysql> select id,name from sailor where name like '%_b';
++----+------+
+| id | name |
++----+------+
+| 95 | bob  |
++----+------+
+1 row in set (0.00 sec)
+
+mysql> select id,name from sailor where name like '%_b';
++----+------+
+| id | name |
++----+------+
+| 95 | bob  |
++----+------+
+1 row in set (0.00 sec)
+
+mysql> select id,name from sailor where name like '%____b';
+Empty set (0.00 sec)
+
+mysql> select id,name from sailor where name like '___b';
+Empty set (0.00 sec)
+
+mysql> select id,name from sailor where name like 'b__';
++----+------+
+| id | name |
++----+------+
+| 95 | bob  |
++----+------+
+1 row in set (0.00 sec)
+
+mysql> select name,rating from sailor min(age);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'min(age)' at line 1
+mysql> select name,rating from sailor where min(age);
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select name,rating from sailor where min(age);
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select name,rating min(age) from sailor;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'min(age) from sailor' at line 1
+mysql> select min(age) from sailor;
++----------+
+| min(age) |
++----------+
+|       16 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select min(age) from sailor(select name,rating from sailor);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(select name,rating from sailor)' at line 1
+mysql> select name,rating from sailor where age=(select min(age) from sailor);
++-------+--------+
+| name  | rating |
++-------+--------+
+| zorba |     10 |
++-------+--------+
+1 row in set (0.00 sec)
+
+mysql> select name,rating from sailor where age=(select min(age) from sailor);
++-------+--------+
+| name  | rating |
++-------+--------+
+| zorba |     10 |
++-------+--------+
+1 row in set (0.00 sec)
+
+mysql> select name,rating=10 from sailor where age=(select max(age) from sailor);
++------+-----------+
+| name | rating=10 |
++------+-----------+
+| bob  |         0 |
++------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select name,rating from sailor where age=(select max(age) from sailor)(select rating=10 from sailor);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(select rating=10 from sailor)' at line 1
+mysql> select name,rating from sailor where age=(select max(age) from sailor);
++------+--------+
+| name | rating |
++------+--------+
+| bob  |      3 |
++------+--------+
+1 row in set (0.00 sec)
+
+mysql> select name,rating from sailor where age=(select max(age),rating=10 from sailor);
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> select name,rating from sailor where age=(select max(age) and rating=10 from sailor);
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'student.sailor.rating'; this is incompatible with sql_mode=only_full_group_by
+mysql> select name,rating from sailor where age=(select max(age) from sailor(select rating=10 from sailor));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(select rating=10 from sailor))' at line 1
+mysql> select name,rating from sailor where age,rating=(select max(age),rating=10 from sailor));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',rating=(select max(age),rating=10 from sailor))' at line 1
+mysql> select name,rating from sailor where age=min(age),rating=10;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',rating=10' at line 1
+mysql> 
+mysql> select *from sailor;
++----+---------+--------+------+
+| id | name    | rating | age  |
++----+---------+--------+------+
+| 22 | dustin  |      7 |   45 |
+| 29 | brutus  |      1 |   33 |
+| 31 | lubber  |      8 | 55.5 |
+| 32 | andy    |      8 | 25.5 |
+| 58 | rusty   |     10 |   35 |
+| 64 | horatio |      7 |   35 |
+| 71 | zorba   |     10 |   16 |
+| 74 | horatio |      9 |   40 |
+| 85 | art     |      3 | 25.5 |
+| 95 | bob     |      3 | 63.5 |
++----+---------+--------+------+
+10 rows in set (0.01 sec)
+
+mysql> select *from reserver;
+Empty set (0.01 sec)
+
+mysql> select *from student;
++------+------+------------+
+| id   | bid  | date       |
++------+------+------------+
+|   22 |  101 | 1998-10-10 |
+|   22 |  102 | 1998-10-10 |
+|   22 |  103 | 1998-10-08 |
+|   22 |  104 | 1998-10-07 |
+|   31 |  102 | 1998-11-10 |
+|   31 |  103 | 1998-11-06 |
+|   31 |  104 | 1998-11-12 |
+|   64 |  101 | 1998-09-05 |
+|   64 |  102 | 1998-09-08 |
+|   74 |  103 | 1998-09-08 |
++------+------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select *from boat;
++------+-----------+-------+
+| bid  | bname     | color |
++------+-----------+-------+
+|  101 | interlake | blue  |
+|  102 | interlake | red   |
+|  103 | clipper   | green |
+|  104 | marine    | red   |
++------+-----------+-------+
+4 rows in set (0.01 sec)
+
+mysql> select id from sailor where bid=(select max(bid) from student);
+ERROR 1054 (42S22): Unknown column 'bid' in 'where clause'
+mysql> select id from sailor where id=(select max(id) from student);
++----+
+| id |
++----+
+| 74 |
++----+
+1 row in set (0.00 sec)
+
+mysql> select id from sailor where student=(select max(id) from student);
+ERROR 1054 (42S22): Unknown column 'student' in 'where clause'
+mysql> select name from sailor where id in(select bid from boat where id in(select bid from boat=103));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '=103))' at line 1
+mysql> select name from sailor where id in(select bid from boat where bid=103);
+Empty set (0.01 sec)
+
+mysql> select name from sailor where name in(select bid from boat where bid=103)
+;
+Empty set, 10 warnings (0.01 sec)
+
+mysql> select name from sailor where id not in(select bid from boat where bid=10
+3);
++---------+
+| name    |
++---------+
+| dustin  |
+| brutus  |
+| lubber  |
+| andy    |
+| rusty   |
+| horatio |
+| zorba   |
+| horatio |
+| art     |
+| bob     |
++---------+
+10 rows in set (0.00 sec)
+
+mysql> select name from sailor where bid in(select bid from boat where bid=103);
+
+ERROR 1054 (42S22): Unknown column 'bid' in 'IN/ALL/ANY subquery'
+mysql> select name from sailor where bid ANY(select bid from boat where bid=103)
+;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ANY(select bid from boat where bid=103)' at line 1
+mysql> select name from sailor where 'bid' ANY(select bid from boat where bid=103);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ANY(select bid from boat where bid=103)' at line 1
+mysql> select name from sailor where 'bid' ANY(select 'bid' from boat where bid=103);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ANY(select 'bid' from boat where bid=103)' at line 1
+mysql> select name from sailor where 'bid' in(select 'bid' from boat where bid=103);
++---------+
+| name    |
++---------+
+| dustin  |
+| brutus  |
+| lubber  |
+| andy    |
+| rusty   |
+| horatio |
+| zorba   |
+| horatio |
+| art     |
+| bob     |
++---------+
+10 rows in set (0.00 sec)
+
+mysql> select name from sailor where 'bid' ALL(select 'bid' from boat where bid=103);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ALL(select 'bid' from boat where bid=103)' at line 1
+mysql> select name from sailor where 'bid' ALL(select 'bid' from boat who reserved where bid=103);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ALL(select 'bid' from boat who reserved where bid=103)' at line 1
+mysql> select id from sailor who reserved boat 'color'=red;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'reserved boat 'color'=red' at line 1
+mysql> select count(*) from student;
++----------+
+| count(*) |
++----------+
+|       10 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select id, count(*) from student group by id;
++------+----------+
+| id   | count(*) |
++------+----------+
+|   22 |        4 |
+|   31 |        3 |
+|   64 |        2 |
+|   74 |        1 |
++------+----------+
+4 rows in set (0.01 sec)
+
+mysql> select count(*) from student;
++----------+
+| count(*) |
++----------+
+|       10 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select bid, count(*) from student group by bid;
++------+----------+
+| bid  | count(*) |
++------+----------+
+|  101 |        2 |
+|  102 |        3 |
+|  103 |        3 |
+|  104 |        2 |
++------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select day, count(*) from student group by day;
+ERROR 1054 (42S22): Unknown column 'day' in 'field list'
+mysql> select day,count(*) from student group by day;
+ERROR 1054 (42S22): Unknown column 'day' in 'field list'
+mysql> select date,count(*) from student group by date;
++------------+----------+
+| date       | count(*) |
++------------+----------+
+| 1998-10-10 |        2 |
+| 1998-10-08 |        1 |
+| 1998-10-07 |        1 |
+| 1998-11-10 |        1 |
+| 1998-11-06 |        1 |
+| 1998-11-12 |        1 |
+| 1998-09-05 |        1 |
+| 1998-09-08 |        2 |
++------------+----------+
+8 rows in set (0.00 sec)
+
+mysql> select avg(age) from sailor order by rating;
++----------+
+| avg(age) |
++----------+
+|     37.4 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select avg(age) from sailor order by rating asc;
++----------+
+| avg(age) |
++----------+
+|     37.4 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select avg(age),rating from sailor group by rating;
++----------+--------+
+| avg(age) | rating |
++----------+--------+
+|       40 |      7 |
+|       33 |      1 |
+|     40.5 |      8 |
+|     25.5 |     10 |
+|       40 |      9 |
+|     44.5 |      3 |
++----------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select count(*),rating,avg(age) from sailor group by rating;
++----------+--------+----------+
+| count(*) | rating | avg(age) |
++----------+--------+----------+
+|        2 |      7 |       40 |
+|        1 |      1 |       33 |
+|        2 |      8 |     40.5 |
+|        2 |     10 |     25.5 |
+|        1 |      9 |       40 |
+|        2 |      3 |     44.5 |
++----------+--------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select count(*),rating,name,avg(age) from sailor group by rating;
+ERROR 1055 (42000): Expression #3 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'student.sailor.name' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> select name from sailor where id in(select id from student);
++---------+
+| name    |
++---------+
+| dustin  |
+| lubber  |
+| horatio |
+| horatio |
++---------+
+4 rows in set (0.00 sec)
+
+mysql> select * from sailor,student;
++----+---------+--------+------+------+------+------------+
+| id | name    | rating | age  | id   | bid  | date       |
++----+---------+--------+------+------+------+------------+
+| 22 | dustin  |      7 |   45 |   74 |  103 | 1998-09-08 |
+| 22 | dustin  |      7 |   45 |   64 |  102 | 1998-09-08 |
+| 22 | dustin  |      7 |   45 |   64 |  101 | 1998-09-05 |
+| 22 | dustin  |      7 |   45 |   31 |  104 | 1998-11-12 |
+| 22 | dustin  |      7 |   45 |   31 |  103 | 1998-11-06 |
+| 22 | dustin  |      7 |   45 |   31 |  102 | 1998-11-10 |
+| 22 | dustin  |      7 |   45 |   22 |  104 | 1998-10-07 |
+| 22 | dustin  |      7 |   45 |   22 |  103 | 1998-10-08 |
+| 22 | dustin  |      7 |   45 |   22 |  102 | 1998-10-10 |
+| 22 | dustin  |      7 |   45 |   22 |  101 | 1998-10-10 |
+| 29 | brutus  |      1 |   33 |   74 |  103 | 1998-09-08 |
+| 29 | brutus  |      1 |   33 |   64 |  102 | 1998-09-08 |
+| 29 | brutus  |      1 |   33 |   64 |  101 | 1998-09-05 |
+| 29 | brutus  |      1 |   33 |   31 |  104 | 1998-11-12 |
+| 29 | brutus  |      1 |   33 |   31 |  103 | 1998-11-06 |
+| 29 | brutus  |      1 |   33 |   31 |  102 | 1998-11-10 |
+| 29 | brutus  |      1 |   33 |   22 |  104 | 1998-10-07 |
+| 29 | brutus  |      1 |   33 |   22 |  103 | 1998-10-08 |
+| 29 | brutus  |      1 |   33 |   22 |  102 | 1998-10-10 |
+| 29 | brutus  |      1 |   33 |   22 |  101 | 1998-10-10 |
+| 31 | lubber  |      8 | 55.5 |   74 |  103 | 1998-09-08 |
+| 31 | lubber  |      8 | 55.5 |   64 |  102 | 1998-09-08 |
+| 31 | lubber  |      8 | 55.5 |   64 |  101 | 1998-09-05 |
+| 31 | lubber  |      8 | 55.5 |   31 |  104 | 1998-11-12 |
+| 31 | lubber  |      8 | 55.5 |   31 |  103 | 1998-11-06 |
+| 31 | lubber  |      8 | 55.5 |   31 |  102 | 1998-11-10 |
+| 31 | lubber  |      8 | 55.5 |   22 |  104 | 1998-10-07 |
+| 31 | lubber  |      8 | 55.5 |   22 |  103 | 1998-10-08 |
+| 31 | lubber  |      8 | 55.5 |   22 |  102 | 1998-10-10 |
+| 31 | lubber  |      8 | 55.5 |   22 |  101 | 1998-10-10 |
+| 32 | andy    |      8 | 25.5 |   74 |  103 | 1998-09-08 |
+| 32 | andy    |      8 | 25.5 |   64 |  102 | 1998-09-08 |
+| 32 | andy    |      8 | 25.5 |   64 |  101 | 1998-09-05 |
+| 32 | andy    |      8 | 25.5 |   31 |  104 | 1998-11-12 |
+| 32 | andy    |      8 | 25.5 |   31 |  103 | 1998-11-06 |
+| 32 | andy    |      8 | 25.5 |   31 |  102 | 1998-11-10 |
+| 32 | andy    |      8 | 25.5 |   22 |  104 | 1998-10-07 |
+| 32 | andy    |      8 | 25.5 |   22 |  103 | 1998-10-08 |
+| 32 | andy    |      8 | 25.5 |   22 |  102 | 1998-10-10 |
+| 32 | andy    |      8 | 25.5 |   22 |  101 | 1998-10-10 |
+| 58 | rusty   |     10 |   35 |   74 |  103 | 1998-09-08 |
+| 58 | rusty   |     10 |   35 |   64 |  102 | 1998-09-08 |
+| 58 | rusty   |     10 |   35 |   64 |  101 | 1998-09-05 |
+| 58 | rusty   |     10 |   35 |   31 |  104 | 1998-11-12 |
+| 58 | rusty   |     10 |   35 |   31 |  103 | 1998-11-06 |
+| 58 | rusty   |     10 |   35 |   31 |  102 | 1998-11-10 |
+| 58 | rusty   |     10 |   35 |   22 |  104 | 1998-10-07 |
+| 58 | rusty   |     10 |   35 |   22 |  103 | 1998-10-08 |
+| 58 | rusty   |     10 |   35 |   22 |  102 | 1998-10-10 |
+| 58 | rusty   |     10 |   35 |   22 |  101 | 1998-10-10 |
+| 64 | horatio |      7 |   35 |   74 |  103 | 1998-09-08 |
+| 64 | horatio |      7 |   35 |   64 |  102 | 1998-09-08 |
+| 64 | horatio |      7 |   35 |   64 |  101 | 1998-09-05 |
+| 64 | horatio |      7 |   35 |   31 |  104 | 1998-11-12 |
+| 64 | horatio |      7 |   35 |   31 |  103 | 1998-11-06 |
+| 64 | horatio |      7 |   35 |   31 |  102 | 1998-11-10 |
+| 64 | horatio |      7 |   35 |   22 |  104 | 1998-10-07 |
+| 64 | horatio |      7 |   35 |   22 |  103 | 1998-10-08 |
+| 64 | horatio |      7 |   35 |   22 |  102 | 1998-10-10 |
+| 64 | horatio |      7 |   35 |   22 |  101 | 1998-10-10 |
+| 71 | zorba   |     10 |   16 |   74 |  103 | 1998-09-08 |
+| 71 | zorba   |     10 |   16 |   64 |  102 | 1998-09-08 |
+| 71 | zorba   |     10 |   16 |   64 |  101 | 1998-09-05 |
+| 71 | zorba   |     10 |   16 |   31 |  104 | 1998-11-12 |
+| 71 | zorba   |     10 |   16 |   31 |  103 | 1998-11-06 |
+| 71 | zorba   |     10 |   16 |   31 |  102 | 1998-11-10 |
+| 71 | zorba   |     10 |   16 |   22 |  104 | 1998-10-07 |
+| 71 | zorba   |     10 |   16 |   22 |  103 | 1998-10-08 |
+| 71 | zorba   |     10 |   16 |   22 |  102 | 1998-10-10 |
+| 71 | zorba   |     10 |   16 |   22 |  101 | 1998-10-10 |
+| 74 | horatio |      9 |   40 |   74 |  103 | 1998-09-08 |
+| 74 | horatio |      9 |   40 |   64 |  102 | 1998-09-08 |
+| 74 | horatio |      9 |   40 |   64 |  101 | 1998-09-05 |
+| 74 | horatio |      9 |   40 |   31 |  104 | 1998-11-12 |
+| 74 | horatio |      9 |   40 |   31 |  103 | 1998-11-06 |
+| 74 | horatio |      9 |   40 |   31 |  102 | 1998-11-10 |
+| 74 | horatio |      9 |   40 |   22 |  104 | 1998-10-07 |
+| 74 | horatio |      9 |   40 |   22 |  103 | 1998-10-08 |
+| 74 | horatio |      9 |   40 |   22 |  102 | 1998-10-10 |
+| 74 | horatio |      9 |   40 |   22 |  101 | 1998-10-10 |
+| 85 | art     |      3 | 25.5 |   74 |  103 | 1998-09-08 |
+| 85 | art     |      3 | 25.5 |   64 |  102 | 1998-09-08 |
+| 85 | art     |      3 | 25.5 |   64 |  101 | 1998-09-05 |
+| 85 | art     |      3 | 25.5 |   31 |  104 | 1998-11-12 |
+| 85 | art     |      3 | 25.5 |   31 |  103 | 1998-11-06 |
+| 85 | art     |      3 | 25.5 |   31 |  102 | 1998-11-10 |
+| 85 | art     |      3 | 25.5 |   22 |  104 | 1998-10-07 |
+| 85 | art     |      3 | 25.5 |   22 |  103 | 1998-10-08 |
+| 85 | art     |      3 | 25.5 |   22 |  102 | 1998-10-10 |
+| 85 | art     |      3 | 25.5 |   22 |  101 | 1998-10-10 |
+| 95 | bob     |      3 | 63.5 |   74 |  103 | 1998-09-08 |
+| 95 | bob     |      3 | 63.5 |   64 |  102 | 1998-09-08 |
+| 95 | bob     |      3 | 63.5 |   64 |  101 | 1998-09-05 |
+| 95 | bob     |      3 | 63.5 |   31 |  104 | 1998-11-12 |
+| 95 | bob     |      3 | 63.5 |   31 |  103 | 1998-11-06 |
+| 95 | bob     |      3 | 63.5 |   31 |  102 | 1998-11-10 |
+| 95 | bob     |      3 | 63.5 |   22 |  104 | 1998-10-07 |
+| 95 | bob     |      3 | 63.5 |   22 |  103 | 1998-10-08 |
+| 95 | bob     |      3 | 63.5 |   22 |  102 | 1998-10-10 |
+| 95 | bob     |      3 | 63.5 |   22 |  101 | 1998-10-10 |
++----+---------+--------+------+------+------+------------+
+100 rows in set (0.00 sec)
+
+mysql> select * from sailor,student,boat;
++----+---------+--------+------+------+------+------------+------+-----------+-------+
+| id | name    | rating | age  | id   | bid  | date       | bid  | bname     | color |
++----+---------+--------+------+------+------+------------+------+-----------+-------+
+| 22 | dustin  |      7 |   45 |   74 |  103 | 1998-09-08 |  101 | interlake | blue  |
+| 22 | dustin  |      7 |   45 |   74 |  103 | 1998-09-08 |  102 | interlake | red   |
+| 22 | dustin  |      7 |   45 |   74 |  103 | 1998-09-08 |  103 | clipper   | green |
+| 22 | dustin  |      7 |   45 |   74 |  103 | 1998-09-08 |  104 | marine    | red   |
+| 22 | dustin  |      7 |   45 |   64 |  102 | 1998-09-08 |  101 | interlake | blue  |
+| 22 | dustin  |      7 |   45 |   64 |  102 | 1998-09-08 |  102 | interlake | red   |
+| 22 | dustin  |      7 |   45 |   64 |  102 | 1998-09-08 |  103 | clipper   | green |
+| 22 | dustin  |      7 |   45 |   64 |  102 | 1998-09-08 |  104 | marine    | red   |
+| 22 | dustin  |      7 |   45 |   64 |  101 | 1998-09-05 |  101 | interlake | blue  |
+| 22 | dustin  |      7 |   45 |   64 |  101 | 1998-09-05 |  102 | interlake | red   |
+| 22 | dustin  |      7 |   45 |   64 |  101 | 1998-09-05 |  103 | clipper   | green |
+| 22 | dustin  |      7 |   45 |   64 |  101 | 1998-09-05 |  104 | marine    | red   |
+| 22 | dustin  |      7 |   45 |   31 |  104 | 1998-11-12 |  101 | interlake | blue  |
+| 22 | dustin  |      7 |   45 |   31 |  104 | 1998-11-12 |  102 | interlake | red   |
+| 22 | dustin  |      7 |   45 |   31 |  104 | 1998-11-12 |  103 | clipper   | green |
+| 22 | dustin  |      7 |   45 |   31 |  104 | 1998-11-12 |  104 | marine    | red   |
+| 22 | dustin  |      7 |   45 |   31 |  103 | 1998-11-06 |  101 | interlake | blue  |
+| 22 | dustin  |      7 |   45 |   31 |  103 | 1998-11-06 |  102 | interlake | red   |
+| 22 | dustin  |      7 |   45 |   31 |  103 | 1998-11-06 |  103 | clipper   | green |
+| 22 | dustin  |      7 |   45 |   31 |  103 | 1998-11-06 |  104 | marine    | red   |
+| 22 | dustin  |      7 |   45 |   31 |  102 | 1998-11-10 |  101 | interlake | blue  |
+| 22 | dustin  |      7 |   45 |   31 |  102 | 1998-11-10 |  102 | interlake | red   |
+| 22 | dustin  |      7 |   45 |   31 |  102 | 1998-11-10 |  103 | clipper   | green |
+| 22 | dustin  |      7 |   45 |   31 |  102 | 1998-11-10 |  104 | marine    | red   |
+| 22 | dustin  |      7 |   45 |   22 |  104 | 1998-10-07 |  101 | interlake | blue  |
+| 22 | dustin  |      7 |   45 |   22 |  104 | 1998-10-07 |  102 | interlake | red   |
+| 22 | dustin  |      7 |   45 |   22 |  104 | 1998-10-07 |  103 | clipper   | green |
+| 22 | dustin  |      7 |   45 |   22 |  104 | 1998-10-07 |  104 | marine    | red   |
+| 22 | dustin  |      7 |   45 |   22 |  103 | 1998-10-08 |  101 | interlake | blue  |
+| 22 | dustin  |      7 |   45 |   22 |  103 | 1998-10-08 |  102 | interlake | red   |
+| 22 | dustin  |      7 |   45 |   22 |  103 | 1998-10-08 |  103 | clipper   | green |
+| 22 | dustin  |      7 |   45 |   22 |  103 | 1998-10-08 |  104 | marine    | red   |
+| 22 | dustin  |      7 |   45 |   22 |  102 | 1998-10-10 |  101 | interlake | blue  |
+| 22 | dustin  |      7 |   45 |   22 |  102 | 1998-10-10 |  102 | interlake | red   |
+| 22 | dustin  |      7 |   45 |   22 |  102 | 1998-10-10 |  103 | clipper   | green |
+| 22 | dustin  |      7 |   45 |   22 |  102 | 1998-10-10 |  104 | marine    | red   |
+| 22 | dustin  |      7 |   45 |   22 |  101 | 1998-10-10 |  101 | interlake | blue  |
+| 22 | dustin  |      7 |   45 |   22 |  101 | 1998-10-10 |  102 | interlake | red   |
+| 22 | dustin  |      7 |   45 |   22 |  101 | 1998-10-10 |  103 | clipper   | green |
+| 22 | dustin  |      7 |   45 |   22 |  101 | 1998-10-10 |  104 | marine    | red   |
+| 29 | brutus  |      1 |   33 |   74 |  103 | 1998-09-08 |  101 | interlake | blue  |
+| 29 | brutus  |      1 |   33 |   74 |  103 | 1998-09-08 |  102 | interlake | red   |
+| 29 | brutus  |      1 |   33 |   74 |  103 | 1998-09-08 |  103 | clipper   | green |
+| 29 | brutus  |      1 |   33 |   74 |  103 | 1998-09-08 |  104 | marine    | red   |
+| 29 | brutus  |      1 |   33 |   64 |  102 | 1998-09-08 |  101 | interlake | blue  |
+| 29 | brutus  |      1 |   33 |   64 |  102 | 1998-09-08 |  102 | interlake | red   |
+| 29 | brutus  |      1 |   33 |   64 |  102 | 1998-09-08 |  103 | clipper   | green |
+| 29 | brutus  |      1 |   33 |   64 |  102 | 1998-09-08 |  104 | marine    | red   |
+| 29 | brutus  |      1 |   33 |   64 |  101 | 1998-09-05 |  101 | interlake | blue  |
+| 29 | brutus  |      1 |   33 |   64 |  101 | 1998-09-05 |  102 | interlake | red   |
+| 29 | brutus  |      1 |   33 |   64 |  101 | 1998-09-05 |  103 | clipper   | green |
+| 29 | brutus  |      1 |   33 |   64 |  101 | 1998-09-05 |  104 | marine    | red   |
+| 29 | brutus  |      1 |   33 |   31 |  104 | 1998-11-12 |  101 | interlake | blue  |
+| 29 | brutus  |      1 |   33 |   31 |  104 | 1998-11-12 |  102 | interlake | red   |
+| 29 | brutus  |      1 |   33 |   31 |  104 | 1998-11-12 |  103 | clipper   | green |
+| 29 | brutus  |      1 |   33 |   31 |  104 | 1998-11-12 |  104 | marine    | red   |
+| 29 | brutus  |      1 |   33 |   31 |  103 | 1998-11-06 |  101 | interlake | blue  |
+| 29 | brutus  |      1 |   33 |   31 |  103 | 1998-11-06 |  102 | interlake | red   |
+| 29 | brutus  |      1 |   33 |   31 |  103 | 1998-11-06 |  103 | clipper   | green |
+| 29 | brutus  |      1 |   33 |   31 |  103 | 1998-11-06 |  104 | marine    | red   |
+| 29 | brutus  |      1 |   33 |   31 |  102 | 1998-11-10 |  101 | interlake | blue  |
+| 29 | brutus  |      1 |   33 |   31 |  102 | 1998-11-10 |  102 | interlake | red   |
+| 29 | brutus  |      1 |   33 |   31 |  102 | 1998-11-10 |  103 | clipper   | green |
+| 29 | brutus  |      1 |   33 |   31 |  102 | 1998-11-10 |  104 | marine    | red   |
+| 29 | brutus  |      1 |   33 |   22 |  104 | 1998-10-07 |  101 | interlake | blue  |
+| 29 | brutus  |      1 |   33 |   22 |  104 | 1998-10-07 |  102 | interlake | red   |
+| 29 | brutus  |      1 |   33 |   22 |  104 | 1998-10-07 |  103 | clipper   | green |
+| 29 | brutus  |      1 |   33 |   22 |  104 | 1998-10-07 |  104 | marine    | red   |
+| 29 | brutus  |      1 |   33 |   22 |  103 | 1998-10-08 |  101 | interlake | blue  |
+| 29 | brutus  |      1 |   33 |   22 |  103 | 1998-10-08 |  102 | interlake | red   |
+| 29 | brutus  |      1 |   33 |   22 |  103 | 1998-10-08 |  103 | clipper   | green |
+| 29 | brutus  |      1 |   33 |   22 |  103 | 1998-10-08 |  104 | marine    | red   |
+| 29 | brutus  |      1 |   33 |   22 |  102 | 1998-10-10 |  101 | interlake | blue  |
+| 29 | brutus  |      1 |   33 |   22 |  102 | 1998-10-10 |  102 | interlake | red   |
+| 29 | brutus  |      1 |   33 |   22 |  102 | 1998-10-10 |  103 | clipper   | green |
+| 29 | brutus  |      1 |   33 |   22 |  102 | 1998-10-10 |  104 | marine    | red   |
+| 29 | brutus  |      1 |   33 |   22 |  101 | 1998-10-10 |  101 | interlake | blue  |
+| 29 | brutus  |      1 |   33 |   22 |  101 | 1998-10-10 |  102 | interlake | red   |
+| 29 | brutus  |      1 |   33 |   22 |  101 | 1998-10-10 |  103 | clipper   | green |
+| 29 | brutus  |      1 |   33 |   22 |  101 | 1998-10-10 |  104 | marine    | red   |
+| 31 | lubber  |      8 | 55.5 |   74 |  103 | 1998-09-08 |  101 | interlake | blue  |
+| 31 | lubber  |      8 | 55.5 |   74 |  103 | 1998-09-08 |  102 | interlake | red   |
+| 31 | lubber  |      8 | 55.5 |   74 |  103 | 1998-09-08 |  103 | clipper   | green |
+| 31 | lubber  |      8 | 55.5 |   74 |  103 | 1998-09-08 |  104 | marine    | red   |
+| 31 | lubber  |      8 | 55.5 |   64 |  102 | 1998-09-08 |  101 | interlake | blue  |
+| 31 | lubber  |      8 | 55.5 |   64 |  102 | 1998-09-08 |  102 | interlake | red   |
+| 31 | lubber  |      8 | 55.5 |   64 |  102 | 1998-09-08 |  103 | clipper   | green |
+| 31 | lubber  |      8 | 55.5 |   64 |  102 | 1998-09-08 |  104 | marine    | red   |
+| 31 | lubber  |      8 | 55.5 |   64 |  101 | 1998-09-05 |  101 | interlake | blue  |
+| 31 | lubber  |      8 | 55.5 |   64 |  101 | 1998-09-05 |  102 | interlake | red   |
+| 31 | lubber  |      8 | 55.5 |   64 |  101 | 1998-09-05 |  103 | clipper   | green |
+| 31 | lubber  |      8 | 55.5 |   64 |  101 | 1998-09-05 |  104 | marine    | red   |
+| 31 | lubber  |      8 | 55.5 |   31 |  104 | 1998-11-12 |  101 | interlake | blue  |
+| 31 | lubber  |      8 | 55.5 |   31 |  104 | 1998-11-12 |  102 | interlake | red   |
+| 31 | lubber  |      8 | 55.5 |   31 |  104 | 1998-11-12 |  103 | clipper   | green |
+| 31 | lubber  |      8 | 55.5 |   31 |  104 | 1998-11-12 |  104 | marine    | red   |
+| 31 | lubber  |      8 | 55.5 |   31 |  103 | 1998-11-06 |  101 | interlake | blue  |
+| 31 | lubber  |      8 | 55.5 |   31 |  103 | 1998-11-06 |  102 | interlake | red   |
+| 31 | lubber  |      8 | 55.5 |   31 |  103 | 1998-11-06 |  103 | clipper   | green |
+| 31 | lubber  |      8 | 55.5 |   31 |  103 | 1998-11-06 |  104 | marine    | red   |
+| 31 | lubber  |      8 | 55.5 |   31 |  102 | 1998-11-10 |  101 | interlake | blue  |
+| 31 | lubber  |      8 | 55.5 |   31 |  102 | 1998-11-10 |  102 | interlake | red   |
+| 31 | lubber  |      8 | 55.5 |   31 |  102 | 1998-11-10 |  103 | clipper   | green |
+| 31 | lubber  |      8 | 55.5 |   31 |  102 | 1998-11-10 |  104 | marine    | red   |
+| 31 | lubber  |      8 | 55.5 |   22 |  104 | 1998-10-07 |  101 | interlake | blue  |
+| 31 | lubber  |      8 | 55.5 |   22 |  104 | 1998-10-07 |  102 | interlake | red   |
+| 31 | lubber  |      8 | 55.5 |   22 |  104 | 1998-10-07 |  103 | clipper   | green |
+| 31 | lubber  |      8 | 55.5 |   22 |  104 | 1998-10-07 |  104 | marine    | red   |
+| 31 | lubber  |      8 | 55.5 |   22 |  103 | 1998-10-08 |  101 | interlake | blue  |
+| 31 | lubber  |      8 | 55.5 |   22 |  103 | 1998-10-08 |  102 | interlake | red   |
+| 31 | lubber  |      8 | 55.5 |   22 |  103 | 1998-10-08 |  103 | clipper   | green |
+| 31 | lubber  |      8 | 55.5 |   22 |  103 | 1998-10-08 |  104 | marine    | red   |
+| 31 | lubber  |      8 | 55.5 |   22 |  102 | 1998-10-10 |  101 | interlake | blue  |
+| 31 | lubber  |      8 | 55.5 |   22 |  102 | 1998-10-10 |  102 | interlake | red   |
+| 31 | lubber  |      8 | 55.5 |   22 |  102 | 1998-10-10 |  103 | clipper   | green |
+| 31 | lubber  |      8 | 55.5 |   22 |  102 | 1998-10-10 |  104 | marine    | red   |
+| 31 | lubber  |      8 | 55.5 |   22 |  101 | 1998-10-10 |  101 | interlake | blue  |
+| 31 | lubber  |      8 | 55.5 |   22 |  101 | 1998-10-10 |  102 | interlake | red   |
+| 31 | lubber  |      8 | 55.5 |   22 |  101 | 1998-10-10 |  103 | clipper   | green |
+| 31 | lubber  |      8 | 55.5 |   22 |  101 | 1998-10-10 |  104 | marine    | red   |
+| 32 | andy    |      8 | 25.5 |   74 |  103 | 1998-09-08 |  101 | interlake | blue  |
+| 32 | andy    |      8 | 25.5 |   74 |  103 | 1998-09-08 |  102 | interlake | red   |
+| 32 | andy    |      8 | 25.5 |   74 |  103 | 1998-09-08 |  103 | clipper   | green |
+| 32 | andy    |      8 | 25.5 |   74 |  103 | 1998-09-08 |  104 | marine    | red   |
+| 32 | andy    |      8 | 25.5 |   64 |  102 | 1998-09-08 |  101 | interlake | blue  |
+| 32 | andy    |      8 | 25.5 |   64 |  102 | 1998-09-08 |  102 | interlake | red   |
+| 32 | andy    |      8 | 25.5 |   64 |  102 | 1998-09-08 |  103 | clipper   | green |
+| 32 | andy    |      8 | 25.5 |   64 |  102 | 1998-09-08 |  104 | marine    | red   |
+| 32 | andy    |      8 | 25.5 |   64 |  101 | 1998-09-05 |  101 | interlake | blue  |
+| 32 | andy    |      8 | 25.5 |   64 |  101 | 1998-09-05 |  102 | interlake | red   |
+| 32 | andy    |      8 | 25.5 |   64 |  101 | 1998-09-05 |  103 | clipper   | green |
+| 32 | andy    |      8 | 25.5 |   64 |  101 | 1998-09-05 |  104 | marine    | red   |
+| 32 | andy    |      8 | 25.5 |   31 |  104 | 1998-11-12 |  101 | interlake | blue  |
+| 32 | andy    |      8 | 25.5 |   31 |  104 | 1998-11-12 |  102 | interlake | red   |
+| 32 | andy    |      8 | 25.5 |   31 |  104 | 1998-11-12 |  103 | clipper   | green |
+| 32 | andy    |      8 | 25.5 |   31 |  104 | 1998-11-12 |  104 | marine    | red   |
+| 32 | andy    |      8 | 25.5 |   31 |  103 | 1998-11-06 |  101 | interlake | blue  |
+| 32 | andy    |      8 | 25.5 |   31 |  103 | 1998-11-06 |  102 | interlake | red   |
+| 32 | andy    |      8 | 25.5 |   31 |  103 | 1998-11-06 |  103 | clipper   | green |
+| 32 | andy    |      8 | 25.5 |   31 |  103 | 1998-11-06 |  104 | marine    | red   |
+| 32 | andy    |      8 | 25.5 |   31 |  102 | 1998-11-10 |  101 | interlake | blue  |
+| 32 | andy    |      8 | 25.5 |   31 |  102 | 1998-11-10 |  102 | interlake | red   |
+| 32 | andy    |      8 | 25.5 |   31 |  102 | 1998-11-10 |  103 | clipper   | green |
+| 32 | andy    |      8 | 25.5 |   31 |  102 | 1998-11-10 |  104 | marine    | red   |
+| 32 | andy    |      8 | 25.5 |   22 |  104 | 1998-10-07 |  101 | interlake | blue  |
+| 32 | andy    |      8 | 25.5 |   22 |  104 | 1998-10-07 |  102 | interlake | red   |
+| 32 | andy    |      8 | 25.5 |   22 |  104 | 1998-10-07 |  103 | clipper   | green |
+| 32 | andy    |      8 | 25.5 |   22 |  104 | 1998-10-07 |  104 | marine    | red   |
+| 32 | andy    |      8 | 25.5 |   22 |  103 | 1998-10-08 |  101 | interlake | blue  |
+| 32 | andy    |      8 | 25.5 |   22 |  103 | 1998-10-08 |  102 | interlake | red   |
+| 32 | andy    |      8 | 25.5 |   22 |  103 | 1998-10-08 |  103 | clipper   | green |
+| 32 | andy    |      8 | 25.5 |   22 |  103 | 1998-10-08 |  104 | marine    | red   |
+| 32 | andy    |      8 | 25.5 |   22 |  102 | 1998-10-10 |  101 | interlake | blue  |
+| 32 | andy    |      8 | 25.5 |   22 |  102 | 1998-10-10 |  102 | interlake | red   |
+| 32 | andy    |      8 | 25.5 |   22 |  102 | 1998-10-10 |  103 | clipper   | green |
+| 32 | andy    |      8 | 25.5 |   22 |  102 | 1998-10-10 |  104 | marine    | red   |
+| 32 | andy    |      8 | 25.5 |   22 |  101 | 1998-10-10 |  101 | interlake | blue  |
+| 32 | andy    |      8 | 25.5 |   22 |  101 | 1998-10-10 |  102 | interlake | red   |
+| 32 | andy    |      8 | 25.5 |   22 |  101 | 1998-10-10 |  103 | clipper   | green |
+| 32 | andy    |      8 | 25.5 |   22 |  101 | 1998-10-10 |  104 | marine    | red   |
+| 58 | rusty   |     10 |   35 |   74 |  103 | 1998-09-08 |  101 | interlake | blue  |
+| 58 | rusty   |     10 |   35 |   74 |  103 | 1998-09-08 |  102 | interlake | red   |
+| 58 | rusty   |     10 |   35 |   74 |  103 | 1998-09-08 |  103 | clipper   | green |
+| 58 | rusty   |     10 |   35 |   74 |  103 | 1998-09-08 |  104 | marine    | red   |
+| 58 | rusty   |     10 |   35 |   64 |  102 | 1998-09-08 |  101 | interlake | blue  |
+| 58 | rusty   |     10 |   35 |   64 |  102 | 1998-09-08 |  102 | interlake | red   |
+| 58 | rusty   |     10 |   35 |   64 |  102 | 1998-09-08 |  103 | clipper   | green |
+| 58 | rusty   |     10 |   35 |   64 |  102 | 1998-09-08 |  104 | marine    | red   |
+| 58 | rusty   |     10 |   35 |   64 |  101 | 1998-09-05 |  101 | interlake | blue  |
+| 58 | rusty   |     10 |   35 |   64 |  101 | 1998-09-05 |  102 | interlake | red   |
+| 58 | rusty   |     10 |   35 |   64 |  101 | 1998-09-05 |  103 | clipper   | green |
+| 58 | rusty   |     10 |   35 |   64 |  101 | 1998-09-05 |  104 | marine    | red   |
+| 58 | rusty   |     10 |   35 |   31 |  104 | 1998-11-12 |  101 | interlake | blue  |
+| 58 | rusty   |     10 |   35 |   31 |  104 | 1998-11-12 |  102 | interlake | red   |
+| 58 | rusty   |     10 |   35 |   31 |  104 | 1998-11-12 |  103 | clipper   | green |
+| 58 | rusty   |     10 |   35 |   31 |  104 | 1998-11-12 |  104 | marine    | red   |
+| 58 | rusty   |     10 |   35 |   31 |  103 | 1998-11-06 |  101 | interlake | blue  |
+| 58 | rusty   |     10 |   35 |   31 |  103 | 1998-11-06 |  102 | interlake | red   |
+| 58 | rusty   |     10 |   35 |   31 |  103 | 1998-11-06 |  103 | clipper   | green |
+| 58 | rusty   |     10 |   35 |   31 |  103 | 1998-11-06 |  104 | marine    | red   |
+| 58 | rusty   |     10 |   35 |   31 |  102 | 1998-11-10 |  101 | interlake | blue  |
+| 58 | rusty   |     10 |   35 |   31 |  102 | 1998-11-10 |  102 | interlake | red   |
+| 58 | rusty   |     10 |   35 |   31 |  102 | 1998-11-10 |  103 | clipper   | green |
+| 58 | rusty   |     10 |   35 |   31 |  102 | 1998-11-10 |  104 | marine    | red   |
+| 58 | rusty   |     10 |   35 |   22 |  104 | 1998-10-07 |  101 | interlake | blue  |
+| 58 | rusty   |     10 |   35 |   22 |  104 | 1998-10-07 |  102 | interlake | red   |
+| 58 | rusty   |     10 |   35 |   22 |  104 | 1998-10-07 |  103 | clipper   | green |
+| 58 | rusty   |     10 |   35 |   22 |  104 | 1998-10-07 |  104 | marine    | red   |
+| 58 | rusty   |     10 |   35 |   22 |  103 | 1998-10-08 |  101 | interlake | blue  |
+| 58 | rusty   |     10 |   35 |   22 |  103 | 1998-10-08 |  102 | interlake | red   |
+| 58 | rusty   |     10 |   35 |   22 |  103 | 1998-10-08 |  103 | clipper   | green |
+| 58 | rusty   |     10 |   35 |   22 |  103 | 1998-10-08 |  104 | marine    | red   |
+| 58 | rusty   |     10 |   35 |   22 |  102 | 1998-10-10 |  101 | interlake | blue  |
+| 58 | rusty   |     10 |   35 |   22 |  102 | 1998-10-10 |  102 | interlake | red   |
+| 58 | rusty   |     10 |   35 |   22 |  102 | 1998-10-10 |  103 | clipper   | green |
+| 58 | rusty   |     10 |   35 |   22 |  102 | 1998-10-10 |  104 | marine    | red   |
+| 58 | rusty   |     10 |   35 |   22 |  101 | 1998-10-10 |  101 | interlake | blue  |
+| 58 | rusty   |     10 |   35 |   22 |  101 | 1998-10-10 |  102 | interlake | red   |
+| 58 | rusty   |     10 |   35 |   22 |  101 | 1998-10-10 |  103 | clipper   | green |
+| 58 | rusty   |     10 |   35 |   22 |  101 | 1998-10-10 |  104 | marine    | red   |
+| 64 | horatio |      7 |   35 |   74 |  103 | 1998-09-08 |  101 | interlake | blue  |
+| 64 | horatio |      7 |   35 |   74 |  103 | 1998-09-08 |  102 | interlake | red   |
+| 64 | horatio |      7 |   35 |   74 |  103 | 1998-09-08 |  103 | clipper   | green |
+| 64 | horatio |      7 |   35 |   74 |  103 | 1998-09-08 |  104 | marine    | red   |
+| 64 | horatio |      7 |   35 |   64 |  102 | 1998-09-08 |  101 | interlake | blue  |
+| 64 | horatio |      7 |   35 |   64 |  102 | 1998-09-08 |  102 | interlake | red   |
+| 64 | horatio |      7 |   35 |   64 |  102 | 1998-09-08 |  103 | clipper   | green |
+| 64 | horatio |      7 |   35 |   64 |  102 | 1998-09-08 |  104 | marine    | red   |
+| 64 | horatio |      7 |   35 |   64 |  101 | 1998-09-05 |  101 | interlake | blue  |
+| 64 | horatio |      7 |   35 |   64 |  101 | 1998-09-05 |  102 | interlake | red   |
+| 64 | horatio |      7 |   35 |   64 |  101 | 1998-09-05 |  103 | clipper   | green |
+| 64 | horatio |      7 |   35 |   64 |  101 | 1998-09-05 |  104 | marine    | red   |
+| 64 | horatio |      7 |   35 |   31 |  104 | 1998-11-12 |  101 | interlake | blue  |
+| 64 | horatio |      7 |   35 |   31 |  104 | 1998-11-12 |  102 | interlake | red   |
+| 64 | horatio |      7 |   35 |   31 |  104 | 1998-11-12 |  103 | clipper   | green |
+| 64 | horatio |      7 |   35 |   31 |  104 | 1998-11-12 |  104 | marine    | red   |
+| 64 | horatio |      7 |   35 |   31 |  103 | 1998-11-06 |  101 | interlake | blue  |
+| 64 | horatio |      7 |   35 |   31 |  103 | 1998-11-06 |  102 | interlake | red   |
+| 64 | horatio |      7 |   35 |   31 |  103 | 1998-11-06 |  103 | clipper   | green |
+| 64 | horatio |      7 |   35 |   31 |  103 | 1998-11-06 |  104 | marine    | red   |
+| 64 | horatio |      7 |   35 |   31 |  102 | 1998-11-10 |  101 | interlake | blue  |
+| 64 | horatio |      7 |   35 |   31 |  102 | 1998-11-10 |  102 | interlake | red   |
+| 64 | horatio |      7 |   35 |   31 |  102 | 1998-11-10 |  103 | clipper   | green |
+| 64 | horatio |      7 |   35 |   31 |  102 | 1998-11-10 |  104 | marine    | red   |
+| 64 | horatio |      7 |   35 |   22 |  104 | 1998-10-07 |  101 | interlake | blue  |
+| 64 | horatio |      7 |   35 |   22 |  104 | 1998-10-07 |  102 | interlake | red   |
+| 64 | horatio |      7 |   35 |   22 |  104 | 1998-10-07 |  103 | clipper   | green |
+| 64 | horatio |      7 |   35 |   22 |  104 | 1998-10-07 |  104 | marine    | red   |
+| 64 | horatio |      7 |   35 |   22 |  103 | 1998-10-08 |  101 | interlake | blue  |
+| 64 | horatio |      7 |   35 |   22 |  103 | 1998-10-08 |  102 | interlake | red   |
+| 64 | horatio |      7 |   35 |   22 |  103 | 1998-10-08 |  103 | clipper   | green |
+| 64 | horatio |      7 |   35 |   22 |  103 | 1998-10-08 |  104 | marine    | red   |
+| 64 | horatio |      7 |   35 |   22 |  102 | 1998-10-10 |  101 | interlake | blue  |
+| 64 | horatio |      7 |   35 |   22 |  102 | 1998-10-10 |  102 | interlake | red   |
+| 64 | horatio |      7 |   35 |   22 |  102 | 1998-10-10 |  103 | clipper   | green |
+| 64 | horatio |      7 |   35 |   22 |  102 | 1998-10-10 |  104 | marine    | red   |
+| 64 | horatio |      7 |   35 |   22 |  101 | 1998-10-10 |  101 | interlake | blue  |
+| 64 | horatio |      7 |   35 |   22 |  101 | 1998-10-10 |  102 | interlake | red   |
+| 64 | horatio |      7 |   35 |   22 |  101 | 1998-10-10 |  103 | clipper   | green |
+| 64 | horatio |      7 |   35 |   22 |  101 | 1998-10-10 |  104 | marine    | red   |
+| 71 | zorba   |     10 |   16 |   74 |  103 | 1998-09-08 |  101 | interlake | blue  |
+| 71 | zorba   |     10 |   16 |   74 |  103 | 1998-09-08 |  102 | interlake | red   |
+| 71 | zorba   |     10 |   16 |   74 |  103 | 1998-09-08 |  103 | clipper   | green |
+| 71 | zorba   |     10 |   16 |   74 |  103 | 1998-09-08 |  104 | marine    | red   |
+| 71 | zorba   |     10 |   16 |   64 |  102 | 1998-09-08 |  101 | interlake | blue  |
+| 71 | zorba   |     10 |   16 |   64 |  102 | 1998-09-08 |  102 | interlake | red   |
+| 71 | zorba   |     10 |   16 |   64 |  102 | 1998-09-08 |  103 | clipper   | green |
+| 71 | zorba   |     10 |   16 |   64 |  102 | 1998-09-08 |  104 | marine    | red   |
+| 71 | zorba   |     10 |   16 |   64 |  101 | 1998-09-05 |  101 | interlake | blue  |
+| 71 | zorba   |     10 |   16 |   64 |  101 | 1998-09-05 |  102 | interlake | red   |
+| 71 | zorba   |     10 |   16 |   64 |  101 | 1998-09-05 |  103 | clipper   | green |
+| 71 | zorba   |     10 |   16 |   64 |  101 | 1998-09-05 |  104 | marine    | red   |
+| 71 | zorba   |     10 |   16 |   31 |  104 | 1998-11-12 |  101 | interlake | blue  |
+| 71 | zorba   |     10 |   16 |   31 |  104 | 1998-11-12 |  102 | interlake | red   |
+| 71 | zorba   |     10 |   16 |   31 |  104 | 1998-11-12 |  103 | clipper   | green |
+| 71 | zorba   |     10 |   16 |   31 |  104 | 1998-11-12 |  104 | marine    | red   |
+| 71 | zorba   |     10 |   16 |   31 |  103 | 1998-11-06 |  101 | interlake | blue  |
+| 71 | zorba   |     10 |   16 |   31 |  103 | 1998-11-06 |  102 | interlake | red   |
+| 71 | zorba   |     10 |   16 |   31 |  103 | 1998-11-06 |  103 | clipper   | green |
+| 71 | zorba   |     10 |   16 |   31 |  103 | 1998-11-06 |  104 | marine    | red   |
+| 71 | zorba   |     10 |   16 |   31 |  102 | 1998-11-10 |  101 | interlake | blue  |
+| 71 | zorba   |     10 |   16 |   31 |  102 | 1998-11-10 |  102 | interlake | red   |
+| 71 | zorba   |     10 |   16 |   31 |  102 | 1998-11-10 |  103 | clipper   | green |
+| 71 | zorba   |     10 |   16 |   31 |  102 | 1998-11-10 |  104 | marine    | red   |
+| 71 | zorba   |     10 |   16 |   22 |  104 | 1998-10-07 |  101 | interlake | blue  |
+| 71 | zorba   |     10 |   16 |   22 |  104 | 1998-10-07 |  102 | interlake | red   |
+| 71 | zorba   |     10 |   16 |   22 |  104 | 1998-10-07 |  103 | clipper   | green |
+| 71 | zorba   |     10 |   16 |   22 |  104 | 1998-10-07 |  104 | marine    | red   |
+| 71 | zorba   |     10 |   16 |   22 |  103 | 1998-10-08 |  101 | interlake | blue  |
+| 71 | zorba   |     10 |   16 |   22 |  103 | 1998-10-08 |  102 | interlake | red   |
+| 71 | zorba   |     10 |   16 |   22 |  103 | 1998-10-08 |  103 | clipper   | green |
+| 71 | zorba   |     10 |   16 |   22 |  103 | 1998-10-08 |  104 | marine    | red   |
+| 71 | zorba   |     10 |   16 |   22 |  102 | 1998-10-10 |  101 | interlake | blue  |
+| 71 | zorba   |     10 |   16 |   22 |  102 | 1998-10-10 |  102 | interlake | red   |
+| 71 | zorba   |     10 |   16 |   22 |  102 | 1998-10-10 |  103 | clipper   | green |
+| 71 | zorba   |     10 |   16 |   22 |  102 | 1998-10-10 |  104 | marine    | red   |
+| 71 | zorba   |     10 |   16 |   22 |  101 | 1998-10-10 |  101 | interlake | blue  |
+| 71 | zorba   |     10 |   16 |   22 |  101 | 1998-10-10 |  102 | interlake | red   |
+| 71 | zorba   |     10 |   16 |   22 |  101 | 1998-10-10 |  103 | clipper   | green |
+| 71 | zorba   |     10 |   16 |   22 |  101 | 1998-10-10 |  104 | marine    | red   |
+| 74 | horatio |      9 |   40 |   74 |  103 | 1998-09-08 |  101 | interlake | blue  |
+| 74 | horatio |      9 |   40 |   74 |  103 | 1998-09-08 |  102 | interlake | red   |
+| 74 | horatio |      9 |   40 |   74 |  103 | 1998-09-08 |  103 | clipper   | green |
+| 74 | horatio |      9 |   40 |   74 |  103 | 1998-09-08 |  104 | marine    | red   |
+| 74 | horatio |      9 |   40 |   64 |  102 | 1998-09-08 |  101 | interlake | blue  |
+| 74 | horatio |      9 |   40 |   64 |  102 | 1998-09-08 |  102 | interlake | red   |
+| 74 | horatio |      9 |   40 |   64 |  102 | 1998-09-08 |  103 | clipper   | green |
+| 74 | horatio |      9 |   40 |   64 |  102 | 1998-09-08 |  104 | marine    | red   |
+| 74 | horatio |      9 |   40 |   64 |  101 | 1998-09-05 |  101 | interlake | blue  |
+| 74 | horatio |      9 |   40 |   64 |  101 | 1998-09-05 |  102 | interlake | red   |
+| 74 | horatio |      9 |   40 |   64 |  101 | 1998-09-05 |  103 | clipper   | green |
+| 74 | horatio |      9 |   40 |   64 |  101 | 1998-09-05 |  104 | marine    | red   |
+| 74 | horatio |      9 |   40 |   31 |  104 | 1998-11-12 |  101 | interlake | blue  |
+| 74 | horatio |      9 |   40 |   31 |  104 | 1998-11-12 |  102 | interlake | red   |
+| 74 | horatio |      9 |   40 |   31 |  104 | 1998-11-12 |  103 | clipper   | green |
+| 74 | horatio |      9 |   40 |   31 |  104 | 1998-11-12 |  104 | marine    | red   |
+| 74 | horatio |      9 |   40 |   31 |  103 | 1998-11-06 |  101 | interlake | blue  |
+| 74 | horatio |      9 |   40 |   31 |  103 | 1998-11-06 |  102 | interlake | red   |
+| 74 | horatio |      9 |   40 |   31 |  103 | 1998-11-06 |  103 | clipper   | green |
+| 74 | horatio |      9 |   40 |   31 |  103 | 1998-11-06 |  104 | marine    | red   |
+| 74 | horatio |      9 |   40 |   31 |  102 | 1998-11-10 |  101 | interlake | blue  |
+| 74 | horatio |      9 |   40 |   31 |  102 | 1998-11-10 |  102 | interlake | red   |
+| 74 | horatio |      9 |   40 |   31 |  102 | 1998-11-10 |  103 | clipper   | green |
+| 74 | horatio |      9 |   40 |   31 |  102 | 1998-11-10 |  104 | marine    | red   |
+| 74 | horatio |      9 |   40 |   22 |  104 | 1998-10-07 |  101 | interlake | blue  |
+| 74 | horatio |      9 |   40 |   22 |  104 | 1998-10-07 |  102 | interlake | red   |
+| 74 | horatio |      9 |   40 |   22 |  104 | 1998-10-07 |  103 | clipper   | green |
+| 74 | horatio |      9 |   40 |   22 |  104 | 1998-10-07 |  104 | marine    | red   |
+| 74 | horatio |      9 |   40 |   22 |  103 | 1998-10-08 |  101 | interlake | blue  |
+| 74 | horatio |      9 |   40 |   22 |  103 | 1998-10-08 |  102 | interlake | red   |
+| 74 | horatio |      9 |   40 |   22 |  103 | 1998-10-08 |  103 | clipper   | green |
+| 74 | horatio |      9 |   40 |   22 |  103 | 1998-10-08 |  104 | marine    | red   |
+| 74 | horatio |      9 |   40 |   22 |  102 | 1998-10-10 |  101 | interlake | blue  |
+| 74 | horatio |      9 |   40 |   22 |  102 | 1998-10-10 |  102 | interlake | red   |
+| 74 | horatio |      9 |   40 |   22 |  102 | 1998-10-10 |  103 | clipper   | green |
+| 74 | horatio |      9 |   40 |   22 |  102 | 1998-10-10 |  104 | marine    | red   |
+| 74 | horatio |      9 |   40 |   22 |  101 | 1998-10-10 |  101 | interlake | blue  |
+| 74 | horatio |      9 |   40 |   22 |  101 | 1998-10-10 |  102 | interlake | red   |
+| 74 | horatio |      9 |   40 |   22 |  101 | 1998-10-10 |  103 | clipper   | green |
+| 74 | horatio |      9 |   40 |   22 |  101 | 1998-10-10 |  104 | marine    | red   |
+| 85 | art     |      3 | 25.5 |   74 |  103 | 1998-09-08 |  101 | interlake | blue  |
+| 85 | art     |      3 | 25.5 |   74 |  103 | 1998-09-08 |  102 | interlake | red   |
+| 85 | art     |      3 | 25.5 |   74 |  103 | 1998-09-08 |  103 | clipper   | green |
+| 85 | art     |      3 | 25.5 |   74 |  103 | 1998-09-08 |  104 | marine    | red   |
+| 85 | art     |      3 | 25.5 |   64 |  102 | 1998-09-08 |  101 | interlake | blue  |
+| 85 | art     |      3 | 25.5 |   64 |  102 | 1998-09-08 |  102 | interlake | red   |
+| 85 | art     |      3 | 25.5 |   64 |  102 | 1998-09-08 |  103 | clipper   | green |
+| 85 | art     |      3 | 25.5 |   64 |  102 | 1998-09-08 |  104 | marine    | red   |
+| 85 | art     |      3 | 25.5 |   64 |  101 | 1998-09-05 |  101 | interlake | blue  |
+| 85 | art     |      3 | 25.5 |   64 |  101 | 1998-09-05 |  102 | interlake | red   |
+| 85 | art     |      3 | 25.5 |   64 |  101 | 1998-09-05 |  103 | clipper   | green |
+| 85 | art     |      3 | 25.5 |   64 |  101 | 1998-09-05 |  104 | marine    | red   |
+| 85 | art     |      3 | 25.5 |   31 |  104 | 1998-11-12 |  101 | interlake | blue  |
+| 85 | art     |      3 | 25.5 |   31 |  104 | 1998-11-12 |  102 | interlake | red   |
+| 85 | art     |      3 | 25.5 |   31 |  104 | 1998-11-12 |  103 | clipper   | green |
+| 85 | art     |      3 | 25.5 |   31 |  104 | 1998-11-12 |  104 | marine    | red   |
+| 85 | art     |      3 | 25.5 |   31 |  103 | 1998-11-06 |  101 | interlake | blue  |
+| 85 | art     |      3 | 25.5 |   31 |  103 | 1998-11-06 |  102 | interlake | red   |
+| 85 | art     |      3 | 25.5 |   31 |  103 | 1998-11-06 |  103 | clipper   | green |
+| 85 | art     |      3 | 25.5 |   31 |  103 | 1998-11-06 |  104 | marine    | red   |
+| 85 | art     |      3 | 25.5 |   31 |  102 | 1998-11-10 |  101 | interlake | blue  |
+| 85 | art     |      3 | 25.5 |   31 |  102 | 1998-11-10 |  102 | interlake | red   |
+| 85 | art     |      3 | 25.5 |   31 |  102 | 1998-11-10 |  103 | clipper   | green |
+| 85 | art     |      3 | 25.5 |   31 |  102 | 1998-11-10 |  104 | marine    | red   |
+| 85 | art     |      3 | 25.5 |   22 |  104 | 1998-10-07 |  101 | interlake | blue  |
+| 85 | art     |      3 | 25.5 |   22 |  104 | 1998-10-07 |  102 | interlake | red   |
+| 85 | art     |      3 | 25.5 |   22 |  104 | 1998-10-07 |  103 | clipper   | green |
+| 85 | art     |      3 | 25.5 |   22 |  104 | 1998-10-07 |  104 | marine    | red   |
+| 85 | art     |      3 | 25.5 |   22 |  103 | 1998-10-08 |  101 | interlake | blue  |
+| 85 | art     |      3 | 25.5 |   22 |  103 | 1998-10-08 |  102 | interlake | red   |
+| 85 | art     |      3 | 25.5 |   22 |  103 | 1998-10-08 |  103 | clipper   | green |
+| 85 | art     |      3 | 25.5 |   22 |  103 | 1998-10-08 |  104 | marine    | red   |
+| 85 | art     |      3 | 25.5 |   22 |  102 | 1998-10-10 |  101 | interlake | blue  |
+| 85 | art     |      3 | 25.5 |   22 |  102 | 1998-10-10 |  102 | interlake | red   |
+| 85 | art     |      3 | 25.5 |   22 |  102 | 1998-10-10 |  103 | clipper   | green |
+| 85 | art     |      3 | 25.5 |   22 |  102 | 1998-10-10 |  104 | marine    | red   |
+| 85 | art     |      3 | 25.5 |   22 |  101 | 1998-10-10 |  101 | interlake | blue  |
+| 85 | art     |      3 | 25.5 |   22 |  101 | 1998-10-10 |  102 | interlake | red   |
+| 85 | art     |      3 | 25.5 |   22 |  101 | 1998-10-10 |  103 | clipper   | green |
+| 85 | art     |      3 | 25.5 |   22 |  101 | 1998-10-10 |  104 | marine    | red   |
+| 95 | bob     |      3 | 63.5 |   74 |  103 | 1998-09-08 |  101 | interlake | blue  |
+| 95 | bob     |      3 | 63.5 |   74 |  103 | 1998-09-08 |  102 | interlake | red   |
+| 95 | bob     |      3 | 63.5 |   74 |  103 | 1998-09-08 |  103 | clipper   | green |
+| 95 | bob     |      3 | 63.5 |   74 |  103 | 1998-09-08 |  104 | marine    | red   |
+| 95 | bob     |      3 | 63.5 |   64 |  102 | 1998-09-08 |  101 | interlake | blue  |
+| 95 | bob     |      3 | 63.5 |   64 |  102 | 1998-09-08 |  102 | interlake | red   |
+| 95 | bob     |      3 | 63.5 |   64 |  102 | 1998-09-08 |  103 | clipper   | green |
+| 95 | bob     |      3 | 63.5 |   64 |  102 | 1998-09-08 |  104 | marine    | red   |
+| 95 | bob     |      3 | 63.5 |   64 |  101 | 1998-09-05 |  101 | interlake | blue  |
+| 95 | bob     |      3 | 63.5 |   64 |  101 | 1998-09-05 |  102 | interlake | red   |
+| 95 | bob     |      3 | 63.5 |   64 |  101 | 1998-09-05 |  103 | clipper   | green |
+| 95 | bob     |      3 | 63.5 |   64 |  101 | 1998-09-05 |  104 | marine    | red   |
+| 95 | bob     |      3 | 63.5 |   31 |  104 | 1998-11-12 |  101 | interlake | blue  |
+| 95 | bob     |      3 | 63.5 |   31 |  104 | 1998-11-12 |  102 | interlake | red   |
+| 95 | bob     |      3 | 63.5 |   31 |  104 | 1998-11-12 |  103 | clipper   | green |
+| 95 | bob     |      3 | 63.5 |   31 |  104 | 1998-11-12 |  104 | marine    | red   |
+| 95 | bob     |      3 | 63.5 |   31 |  103 | 1998-11-06 |  101 | interlake | blue  |
+| 95 | bob     |      3 | 63.5 |   31 |  103 | 1998-11-06 |  102 | interlake | red   |
+| 95 | bob     |      3 | 63.5 |   31 |  103 | 1998-11-06 |  103 | clipper   | green |
+| 95 | bob     |      3 | 63.5 |   31 |  103 | 1998-11-06 |  104 | marine    | red   |
+| 95 | bob     |      3 | 63.5 |   31 |  102 | 1998-11-10 |  101 | interlake | blue  |
+| 95 | bob     |      3 | 63.5 |   31 |  102 | 1998-11-10 |  102 | interlake | red   |
+| 95 | bob     |      3 | 63.5 |   31 |  102 | 1998-11-10 |  103 | clipper   | green |
+| 95 | bob     |      3 | 63.5 |   31 |  102 | 1998-11-10 |  104 | marine    | red   |
+| 95 | bob     |      3 | 63.5 |   22 |  104 | 1998-10-07 |  101 | interlake | blue  |
+| 95 | bob     |      3 | 63.5 |   22 |  104 | 1998-10-07 |  102 | interlake | red   |
+| 95 | bob     |      3 | 63.5 |   22 |  104 | 1998-10-07 |  103 | clipper   | green |
+| 95 | bob     |      3 | 63.5 |   22 |  104 | 1998-10-07 |  104 | marine    | red   |
+| 95 | bob     |      3 | 63.5 |   22 |  103 | 1998-10-08 |  101 | interlake | blue  |
+| 95 | bob     |      3 | 63.5 |   22 |  103 | 1998-10-08 |  102 | interlake | red   |
+| 95 | bob     |      3 | 63.5 |   22 |  103 | 1998-10-08 |  103 | clipper   | green |
+| 95 | bob     |      3 | 63.5 |   22 |  103 | 1998-10-08 |  104 | marine    | red   |
+| 95 | bob     |      3 | 63.5 |   22 |  102 | 1998-10-10 |  101 | interlake | blue  |
+| 95 | bob     |      3 | 63.5 |   22 |  102 | 1998-10-10 |  102 | interlake | red   |
+| 95 | bob     |      3 | 63.5 |   22 |  102 | 1998-10-10 |  103 | clipper   | green |
+| 95 | bob     |      3 | 63.5 |   22 |  102 | 1998-10-10 |  104 | marine    | red   |
+| 95 | bob     |      3 | 63.5 |   22 |  101 | 1998-10-10 |  101 | interlake | blue  |
+| 95 | bob     |      3 | 63.5 |   22 |  101 | 1998-10-10 |  102 | interlake | red   |
+| 95 | bob     |      3 | 63.5 |   22 |  101 | 1998-10-10 |  103 | clipper   | green |
+| 95 | bob     |      3 | 63.5 |   22 |  101 | 1998-10-10 |  104 | marine    | red   |
++----+---------+--------+------+------+------+------------+------+-----------+-------+
+400 rows in set (0.00 sec)
+
+mysql> select * from student,boat;
++------+------+------------+------+-----------+-------+
+| id   | bid  | date       | bid  | bname     | color |
++------+------+------------+------+-----------+-------+
+|   22 |  101 | 1998-10-10 |  104 | marine    | red   |
+|   22 |  101 | 1998-10-10 |  103 | clipper   | green |
+|   22 |  101 | 1998-10-10 |  102 | interlake | red   |
+|   22 |  101 | 1998-10-10 |  101 | interlake | blue  |
+|   22 |  102 | 1998-10-10 |  104 | marine    | red   |
+|   22 |  102 | 1998-10-10 |  103 | clipper   | green |
+|   22 |  102 | 1998-10-10 |  102 | interlake | red   |
+|   22 |  102 | 1998-10-10 |  101 | interlake | blue  |
+|   22 |  103 | 1998-10-08 |  104 | marine    | red   |
+|   22 |  103 | 1998-10-08 |  103 | clipper   | green |
+|   22 |  103 | 1998-10-08 |  102 | interlake | red   |
+|   22 |  103 | 1998-10-08 |  101 | interlake | blue  |
+|   22 |  104 | 1998-10-07 |  104 | marine    | red   |
+|   22 |  104 | 1998-10-07 |  103 | clipper   | green |
+|   22 |  104 | 1998-10-07 |  102 | interlake | red   |
+|   22 |  104 | 1998-10-07 |  101 | interlake | blue  |
+|   31 |  102 | 1998-11-10 |  104 | marine    | red   |
+|   31 |  102 | 1998-11-10 |  103 | clipper   | green |
+|   31 |  102 | 1998-11-10 |  102 | interlake | red   |
+|   31 |  102 | 1998-11-10 |  101 | interlake | blue  |
+|   31 |  103 | 1998-11-06 |  104 | marine    | red   |
+|   31 |  103 | 1998-11-06 |  103 | clipper   | green |
+|   31 |  103 | 1998-11-06 |  102 | interlake | red   |
+|   31 |  103 | 1998-11-06 |  101 | interlake | blue  |
+|   31 |  104 | 1998-11-12 |  104 | marine    | red   |
+|   31 |  104 | 1998-11-12 |  103 | clipper   | green |
+|   31 |  104 | 1998-11-12 |  102 | interlake | red   |
+|   31 |  104 | 1998-11-12 |  101 | interlake | blue  |
+|   64 |  101 | 1998-09-05 |  104 | marine    | red   |
+|   64 |  101 | 1998-09-05 |  103 | clipper   | green |
+|   64 |  101 | 1998-09-05 |  102 | interlake | red   |
+|   64 |  101 | 1998-09-05 |  101 | interlake | blue  |
+|   64 |  102 | 1998-09-08 |  104 | marine    | red   |
+|   64 |  102 | 1998-09-08 |  103 | clipper   | green |
+|   64 |  102 | 1998-09-08 |  102 | interlake | red   |
+|   64 |  102 | 1998-09-08 |  101 | interlake | blue  |
+|   74 |  103 | 1998-09-08 |  104 | marine    | red   |
+|   74 |  103 | 1998-09-08 |  103 | clipper   | green |
+|   74 |  103 | 1998-09-08 |  102 | interlake | red   |
+|   74 |  103 | 1998-09-08 |  101 | interlake | blue  |
++------+------+------------+------+-----------+-------+
+40 rows in set (0.00 sec)
+
+mysql> select * from sailor s,student r where s.id=r.id;
++----+---------+--------+------+------+------+------------+
+| id | name    | rating | age  | id   | bid  | date       |
++----+---------+--------+------+------+------+------------+
+| 22 | dustin  |      7 |   45 |   22 |  101 | 1998-10-10 |
+| 22 | dustin  |      7 |   45 |   22 |  102 | 1998-10-10 |
+| 22 | dustin  |      7 |   45 |   22 |  103 | 1998-10-08 |
+| 22 | dustin  |      7 |   45 |   22 |  104 | 1998-10-07 |
+| 31 | lubber  |      8 | 55.5 |   31 |  102 | 1998-11-10 |
+| 31 | lubber  |      8 | 55.5 |   31 |  103 | 1998-11-06 |
+| 31 | lubber  |      8 | 55.5 |   31 |  104 | 1998-11-12 |
+| 64 | horatio |      7 |   35 |   64 |  101 | 1998-09-05 |
+| 64 | horatio |      7 |   35 |   64 |  102 | 1998-09-08 |
+| 74 | horatio |      9 |   40 |   74 |  103 | 1998-09-08 |
++----+---------+--------+------+------+------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select id,name from sailor where id in(select id from student);
++----+---------+
+| id | name    |
++----+---------+
+| 22 | dustin  |
+| 31 | lubber  |
+| 64 | horatio |
+| 74 | horatio |
++----+---------+
+4 rows in set (0.00 sec)
+
+mysql> select s.id,s.name from sailor,student;
+ERROR 1054 (42S22): Unknown column 's.id' in 'field list'
+mysql> select s.id,s.name from sailor;
+ERROR 1054 (42S22): Unknown column 's.id' in 'field list'
+mysql> select s.id,s.name from sailor s,student r where s.id=r.id;
++----+---------+
+| id | name    |
++----+---------+
+| 22 | dustin  |
+| 22 | dustin  |
+| 22 | dustin  |
+| 22 | dustin  |
+| 31 | lubber  |
+| 31 | lubber  |
+| 31 | lubber  |
+| 64 | horatio |
+| 64 | horatio |
+| 74 | horatio |
++----+---------+
+10 rows in set (0.00 sec)
+
+mysql> select id,name,bid from sailor where in(select id from student);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'in(select id from student)' at line 1
+mysql> select id,name,bid from sailor where in(select id from reserves);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'in(select id from reserves)' at line 1
+mysql> select id,name from sailor where in(select id from student);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'in(select id from student)' at line 1
+mysql> select id,name from sailor where IN(select id from student);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'IN(select id from student)' at line 1
+mysql> select s.id as sailor id,s.name from sailor as s ,student r where s.id=r.id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'id,s.name from sailor as s ,student r where s.id=r.id' at line 1
+mysql> select s.id as sailor id,s.name from sailor s ,student r where s.id=r.id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'id,s.name from sailor s ,student r where s.id=r.id' at line 1
+mysql> select id,name from sailor where id IN(select id from student);
++----+---------+
+| id | name    |
++----+---------+
+| 22 | dustin  |
+| 31 | lubber  |
+| 64 | horatio |
+| 74 | horatio |
++----+---------+
+4 rows in set (0.00 sec)
+
+mysql> select id,name,bid from sailor where id IN(select id from student);
+ERROR 1054 (42S22): Unknown column 'bid' in 'field list'
+mysql> select count(*);
++----------+
+| count(*) |
++----------+
+|        1 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select name from sailor max(age)>max(age) where rating=10;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'max(age)>max(age) where rating=10' at line 1
+mysql> select name from sailor max(age) where age IN(select max(age) where rating=10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'max(age) where age IN(select max(age) where rating=10)' at line 1
+mysql> select s.id,s.name,r.bid from sailor s,student r,boat b where s.id=r.id and b.bid=r.id;
+Empty set (0.00 sec)
+
+mysql> select s.id,s.name,r.bid from sailor s,student r,boat b where s.id=r.id and b.bid=r.bid;
++----+---------+------+
+| id | name    | bid  |
++----+---------+------+
+| 22 | dustin  |  101 |
+| 22 | dustin  |  102 |
+| 22 | dustin  |  103 |
+| 22 | dustin  |  104 |
+| 31 | lubber  |  102 |
+| 31 | lubber  |  103 |
+| 31 | lubber  |  104 |
+| 64 | horatio |  101 |
+| 64 | horatio |  102 |
+| 74 | horatio |  103 |
++----+---------+------+
+10 rows in set (0.00 sec)
+
+mysql> select name,max(age) from sailor where id IN(select max(age) where rating=10);
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'student.sailor.name'; this is incompatible with sql_mode=only_full_group_by
+mysql> select name,max(age) from sailor where id IN(select max(age) where rating=10 from sailor);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from sailor)' at line 1
+mysql> select name,max(age) from sailor where id IN(select id from sailor max(age) where rating=10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'max(age) where rating=10)' at line 1
+mysql> select name,max(age) from sailor where id IN(select id,max(age)from sailolr where rating=10);
+ERROR 1146 (42S02): Table 'student.sailolr' doesn't exist
+mysql> select name,max(age) from sailor where id IN(select id,max(age)from sailor where rating=10);
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> select name,max(age) from sailor where name IN(select name,max(age)from sailor where rating=10);
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> select name,max(age) from sailor where name IN(select max(age)from sailor where rating=10);
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'student.sailor.name'; this is incompatible with sql_mode=only_full_group_by
+mysql> select name,max(age) from sailor where id IN(select max(age)from sailor where rating=10);
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'student.sailor.name'; this is incompatible with sql_mode=only_full_group_by
+mysql> select name,max(age) from sailor;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'student.sailor.name'; this is incompatible with sql_mode=only_full_group_by
+mysql> select name from sailor where id IN(select id,max(age) where rating=10);
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> select name from sailor where (select max(age) where rating=10);
++-------+
+| name  |
++-------+
+| rusty |
+| zorba |
++-------+
+2 rows in set (0.00 sec)
+
+mysql> select name from sailor where (select max(age)>max(age) where rating=10);
+Empty set (0.00 sec)
+
+mysql> select name from sailor where (select max(age)>max(age) where rating=10);
+Empty set (0.00 sec)
+
+mysql> select name from sailor where max(age) IN (select max(age) where rating=10);
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select name from sailor where (select max(age) is greater than max(age) where rating=10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'greater than max(age) where rating=10)' at line 1
+mysql> select name,max(age) from sailor where (select max(age) where rating=10);
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'student.sailor.name'; this is incompatible with sql_mode=only_full_group_by
+mysql> select name from sailor max(age) where rating=10;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'max(age) where rating=10' at line 1
+mysql> select name from sailor where (select max(age) where rating=10 from sailor);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from sailor)' at line 1
+mysql> select name from sailor where (select max(age) where rating=10);
++-------+
+| name  |
++-------+
+| rusty |
+| zorba |
++-------+
+2 rows in set (0.00 sec)
+
+mysql> select name from sailor where max(age),rating=10;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',rating=10' at line 1
+mysql> select name from sailor where rating IN(select max(age) where rating=10);
+Empty set (0.00 sec)
+
+mysql> select name from sailor where rating IN(select rating max(age) where rating=10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'max(age) where rating=10)' at line 1
+mysql> select count(bid) from student group by id;
++------------+
+| count(bid) |
++------------+
+|          4 |
+|          3 |
+|          2 |
+|          1 |
++------------+
+4 rows in set (0.01 sec)
+
+mysql> select id,count(bid) from student group by id;
++------+------------+
+| id   | count(bid) |
++------+------------+
+|   22 |          4 |
+|   31 |          3 |
+|   64 |          2 |
+|   74 |          1 |
++------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select count(rating) from sailor s,student r where s.id=r.id;
++---------------+
+| count(rating) |
++---------------+
+|            10 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select count(rating)=10 from sailor s,student r where s.id=r.id;
++------------------+
+| count(rating)=10 |
++------------------+
+|                1 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> select count(rating)=10 from sailor s,bid=104 from student r where s.id=r.id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '=104 from student r where s.id=r.id' at line 1
+mysql> select count(rating) from sailor s,bid=104 from student r where s.id=r.id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '=104 from student r where s.id=r.id' at line 1
+mysql> select count(rating) from sailor s where bid IN(select bid=104 from student r where s.id=r.id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select count(rating) from sailor s where bid IN(select bid=104 from student r) where s.id=r.id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where s.id=r.id' at line 1
+mysql> select count(rating) from sailor where id in(select id from student where bid=104);
++---------------+
+| count(rating) |
++---------------+
+|             2 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) from student where rating=10;
+ERROR 1054 (42S22): Unknown column 'rating' in 'where clause'
+mysql> select count(*) from student where bid=104;
++----------+
+| count(*) |
++----------+
+|        2 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) from sailor where name=horatio;
+ERROR 1054 (42S22): Unknown column 'horatio' in 'where clause'
+mysql> select count(*) from sailor where name like 'horatio';
++----------+
+| count(*) |
++----------+
+|        2 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select name from sailor where max(age),rating=10;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',rating=10' at line 1
+mysql> select s.name,r.date,b.bid from sailor s,student r where s.id=r.id and b.id and b.id=103;
+ERROR 1054 (42S22): Unknown column 'b.bid' in 'field list'
+mysql> select s.name,r.date from sailor s,student r where s.id=r.id and b.id=103;
+ERROR 1054 (42S22): Unknown column 'b.id' in 'where clause'
+mysql> select s.name,r.date from sailor s,student r where s.id=r.id and bid=103;
++---------+------------+
+| name    | date       |
++---------+------------+
+| dustin  | 1998-10-08 |
+| lubber  | 1998-11-06 |
+| horatio | 1998-09-08 |
++---------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select color from boat where bid in(select bid from student where id in(select id from sailor where name like 'lubber';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select color from boat where bid in(select bid from student where id in(select id from sailor where name like 'lubber'));
++-------+
+| color |
++-------+
+| red   |
+| green |
+| red   |
++-------+
+3 rows in set (0.00 sec)
+
+mysql> select bid from boat where bid in(select bid from student where id in(select id from sailor where name like 'lubber'));
++------+
+| bid  |
++------+
+|  102 |
+|  103 |
+|  104 |
++------+
+3 rows in set (0.00 sec)
+
+mysql> select name from boat where bid in(select bid from student where id in(select id from sailor where name id=22));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'id=22))' at line 1
+mysql> select name from boat where bid in(select bid from student where id in(select id from sailor where id=22));
+ERROR 1054 (42S22): Unknown column 'name' in 'field list'
+mysql> select name from boat where bid in(select bid from student where id in(select id from sailor where bid=103));
+ERROR 1054 (42S22): Unknown column 'name' in 'field list'
+mysql> select name from boat where bid not in(select bid from student where id in(select id from sailor where name like 'sailor'));
+ERROR 1054 (42S22): Unknown column 'name' in 'field list'
+mysql> select bid from boat where bid not in(select bid from student where id in(select id from sailor where name like 'sailor'));
++------+
+| bid  |
++------+
+|  101 |
+|  102 |
+|  103 |
+|  104 |
++------+
+4 rows in set (0.00 sec)
+
+mysql> select bid from boat where bid not in(select bid from student where id in(select id from sailor where name like 'lubber'));
++------+
+| bid  |
++------+
+|  101 |
++------+
+1 row in set (0.00 sec)
+
+mysql> select s.name,r.day from sailor s,student r where s.id=r.id;
+ERROR 1054 (42S22): Unknown column 'r.day' in 'field list'
+mysql> select s.name,r.day from sailor s,student r where s.id=r.id;
+ERROR 1054 (42S22): Unknown column 'r.day' in 'field list'
+mysql> select s.name,r.date from sailor s,student r where s.id=r.id;
++---------+------------+
+| name    | date       |
++---------+------------+
+| dustin  | 1998-10-10 |
+| dustin  | 1998-10-10 |
+| dustin  | 1998-10-08 |
+| dustin  | 1998-10-07 |
+| lubber  | 1998-11-10 |
+| lubber  | 1998-11-06 |
+| lubber  | 1998-11-12 |
+| horatio | 1998-09-05 |
+| horatio | 1998-09-08 |
+| horatio | 1998-09-08 |
++---------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select color from boat where name like 'lubber';
+ERROR 1054 (42S22): Unknown column 'name' in 'where clause'
+mysql> select color from boat where bid in(select bid from boat where name like 'lubber');
+ERROR 1054 (42S22): Unknown column 'name' in 'where clause'
+mysql> select color from boat where bid in(select bid from boat where 'name' like 'lubber');
+Empty set (0.00 sec)
+
+mysql> select color from boat where bid not in(select bid from boat where name='lubber');
+ERROR 1054 (42S22): Unknown column 'name' in 'where clause'
+mysql> select name from sailor where id in(select id from student where bid in(select bid from boat where name like 'interlake');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select name from sailor where id in(select id from student where bid in(select bid from boat where name='interlake');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select name from sailor where id in(select id from student where bid in(select bid from boat where bname='interlake');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select name from sailor where id in(select id from student where bid in(select bid from boat where bname like 'interlake');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select name from sailor where id in(select id from student where bid in(select bid from boat where bname like 'interlake'));
++---------+
+| name    |
++---------+
+| dustin  |
+| lubber  |
+| horatio |
++---------+
+3 rows in set (0.00 sec)
+
+mysql> select name from sailor where id not in(select id from student where bid in(select bid from boat where bname like 'interlake'));
++---------+
+| name    |
++---------+
+| brutus  |
+| andy    |
+| rusty   |
+| zorba   |
+| horatio |
+| art     |
+| bob     |
++---------+
+7 rows in set (0.00 sec)
+
+mysql> select name from sailor where id not in(select id from student where bid not in(select bid from boat where bname like 'interlake'));
++---------+
+| name    |
++---------+
+| brutus  |
+| andy    |
+| rusty   |
+| horatio |
+| zorba   |
+| art     |
+| bob     |
++---------+
+7 rows in set (0.01 sec)
+
+mysql> select name from sailor where id ALL(select id from student where bid ALL(select bid from boat where color='red' and 'green';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ALL(select id from student where bid ALL(select bid from boat where color='red' ' at line 1
+mysql> select name from sailor where id in(select id from student where bid in(select bid from boat where color like 'red','green';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','green'' at line 1
+mysql> select name from sailor where id in(select id from student where bid in(select bid from boat where color='red','green';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','green'' at line 1
+mysql> select name from sailor where id in(select id from student where bid in(select bid from boat where color='red'and'green';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select name from sailor where id in(select id from student where bid in(select bid from boat where color='red'and'green'));
+Empty set, 1 warning (0.01 sec)
+
+mysql> select name from sailor where id in(select id from student where bid in(select bid from boat where color like 'red'and'green'));
+Empty set, 1 warning (0.01 sec)
+
+mysql> select name from sailor where age > (select max(age) from sailor where rating=10);
++---------+
+| name    |
++---------+
+| dustin  |
+| lubber  |
+| horatio |
+| bob     |
++---------+
+4 rows in set (0.00 sec)
+
+mysql> select name from sailor where id in(select id from student where bid in(select bid from boat where color like 'red'))intersect(select id from student where bid in(select bid from boat where color like 'green'));
+Empty set (0.00 sec)
+
+mysql> select name from sailor where id in(select id from student where bid in(select bid from boat where color like 'red'));
++---------+
+| name    |
++---------+
+| dustin  |
+| lubber  |
+| horatio |
++---------+
+3 rows in set (0.00 sec)
+
+mysql> select name from sailor where id in(select id from student where bid in(select bid from boat where color like 'green'));
++---------+
+| name    |
++---------+
+| dustin  |
+| lubber  |
+| horatio |
++---------+
+3 rows in set (0.00 sec)
+
+mysql> select name from sailor where rating>ANY(select rating from sailor where name='horatio');
++---------+
+| name    |
++---------+
+| lubber  |
+| andy    |
+| rusty   |
+| zorba   |
+| horatio |
++---------+
+5 rows in set (0.00 sec)
+
+mysql> select name from sailor where rating>ALL(select rating from sailor where name='horatio');
++-------+
+| name  |
++-------+
+| rusty |
+| zorba |
++-------+
+2 rows in set (0.00 sec)
+
+mysql> select name from sailor where rating=ANY(select rating from sailor where name='horatio');
++---------+
+| name    |
++---------+
+| dustin  |
+| horatio |
+| horatio |
++---------+
+3 rows in set (0.00 sec)
+
+mysql> 
+
+Database changed
+mysql> select name from sailor where rating>any(select rating from sailor where name='horatio');
++---------+
+| name    |
++---------+
+| lubber  |
+| andy    |
+| rusty   |
+| zorba   |
+| horatio |
++---------+
+5 rows in set (0.01 sec)
+
+mysql> select name from sailor where rating>all(select rating from where name='horatio');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where name='horatio')' at line 1
+mysql> select name from sailor where rating>all(select rating from sailor where name='horatio');
++-------+
+| name  |
++-------+
+| rusty |
+| zorba |
++-------+
+2 rows in set (0.00 sec)
+
+mysql> sel
+
+select bid from student where bid in(select bid from boat where color='red');
++------+
+| bid  |
++------+
+|  102 |
+|  104 |
+|  102 |
+|  104 |
+|  102 |
++------+
+5 rows in set (0.01 sec)
+
+mysql> select bid from student where bid in(select bid from boat where color='red'and bid in(select bid from boat where color='green'));
+Empty set (0.00 sec)
+
+mysql> select bid from student where bid in(select bid from boat where color='red')select id from bid in(select bid from boat where color='green')
+    -> select bid from student where bid in(select bid from boat where color='red')select id from bid in(select bid from boat where color='green');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select id from bid in(select bid from boat where color='green')
+select bid from ' at line 1
+mysql> select name from sailor where id in(select bid from boat where color='red')and id in(select bid from boat where color='green');
+Empty set (0.00 sec)
+
+mysql> select id from student where bid in(select bid from boat where color='red')and id in(select id from student where bid in(select bid from boat where color='green'));
++------+
+| id   |
++------+
+|   22 |
+|   22 |
+|   31 |
+|   31 |
++------+
+4 rows in set (0.00 sec)
+
+mysql> use student;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select name from sailor where id in(select id from student where bid in(select bid from boat where color='red'))INTERSECT(select id from student where bid in(select bid from boat where color='green'));
+Empty set (0.00 sec)
+
+mysql> select name from sailor where id in(select id from student where bid in(select bid from boat where color='red'))EXCEPT(select id from student where bid in(select bid from boat where color='green'));
++---------+
+| name    |
++---------+
+| dustin  |
+| lubber  |
+| horatio |
++---------+
+3 rows in set (0.00 sec)
+
+mysql> select name,id from sailor where id in(select id from student where bid in(select bid from boat where color='red'))EXCEPT(select id from student where bid in(select bid from boat where color='green'));
+ERROR 1222 (21000): The used SELECT statements have a different number of columns
+mysql> select name,id from sailor where id in(select id from student where bid in(select bid from boat where color='red'))EXCEPT(select id from student where bid in(select id from student where bid in(select bid from boat where colo='green'));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select name,id from sailor where id in((select id from student where bid in(select bid from boat where color='red'))EXCEPT(select id from student where bid in(select id from student where bid in(select bid from boat where colo='green')));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select name,id from sailor where id in((select id from student where bid in(select bid from boat where color='red'))except(select id from student where bid in(select id from student where bid in(select bi
+d from boat where colo='green')));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select name,id from sailor where id in((select id from student where bid in(select bid from boat where color='red'))except(select id from student where bid in(select id from student where bid in(select bid from boat where color='green')));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select name,id from sailor where id in((select id from student where bid in(select bid from boat where color='red'))except(select id from student where bid in(select bid from boat where color='green')));
++---------+----+
+| name    | id |
++---------+----+
+| horatio | 64 |
++---------+----+
+1 row in set (0.00 sec)
+
+mysql> select name,id from sailor where id in((select id from student where bid in(select bid from boat where color='red'))union(select id from student where bid in(select bid from boat where color='green')));
++---------+----+
+| name    | id |
++---------+----+
+| dustin  | 22 |
+| lubber  | 31 |
+| horatio | 64 |
+| horatio | 74 |
++---------+----+
+4 rows in set (0.00 sec)
+
+mysql> select * from sailor,student;
++----+---------+--------+------+------+------+------------+
+| id | name    | rating | age  | id   | bid  | date       |
++----+---------+--------+------+------+------+------------+
+| 22 | dustin  |      7 |   45 |   74 |  103 | 1998-09-08 |
+| 22 | dustin  |      7 |   45 |   64 |  102 | 1998-09-08 |
+| 22 | dustin  |      7 |   45 |   64 |  101 | 1998-09-05 |
+| 22 | dustin  |      7 |   45 |   31 |  104 | 1998-11-12 |
+| 22 | dustin  |      7 |   45 |   31 |  103 | 1998-11-06 |
+| 22 | dustin  |      7 |   45 |   31 |  102 | 1998-11-10 |
+| 22 | dustin  |      7 |   45 |   22 |  104 | 1998-10-07 |
+| 22 | dustin  |      7 |   45 |   22 |  103 | 1998-10-08 |
+| 22 | dustin  |      7 |   45 |   22 |  102 | 1998-10-10 |
+| 22 | dustin  |      7 |   45 |   22 |  101 | 1998-10-10 |
+| 29 | brutus  |      1 |   33 |   74 |  103 | 1998-09-08 |
+| 29 | brutus  |      1 |   33 |   64 |  102 | 1998-09-08 |
+| 29 | brutus  |      1 |   33 |   64 |  101 | 1998-09-05 |
+| 29 | brutus  |      1 |   33 |   31 |  104 | 1998-11-12 |
+| 29 | brutus  |      1 |   33 |   31 |  103 | 1998-11-06 |
+| 29 | brutus  |      1 |   33 |   31 |  102 | 1998-11-10 |
+| 29 | brutus  |      1 |   33 |   22 |  104 | 1998-10-07 |
+| 29 | brutus  |      1 |   33 |   22 |  103 | 1998-10-08 |
+| 29 | brutus  |      1 |   33 |   22 |  102 | 1998-10-10 |
+| 29 | brutus  |      1 |   33 |   22 |  101 | 1998-10-10 |
+| 31 | lubber  |      8 | 55.5 |   74 |  103 | 1998-09-08 |
+| 31 | lubber  |      8 | 55.5 |   64 |  102 | 1998-09-08 |
+| 31 | lubber  |      8 | 55.5 |   64 |  101 | 1998-09-05 |
+| 31 | lubber  |      8 | 55.5 |   31 |  104 | 1998-11-12 |
+| 31 | lubber  |      8 | 55.5 |   31 |  103 | 1998-11-06 |
+| 31 | lubber  |      8 | 55.5 |   31 |  102 | 1998-11-10 |
+| 31 | lubber  |      8 | 55.5 |   22 |  104 | 1998-10-07 |
+| 31 | lubber  |      8 | 55.5 |   22 |  103 | 1998-10-08 |
+| 31 | lubber  |      8 | 55.5 |   22 |  102 | 1998-10-10 |
+| 31 | lubber  |      8 | 55.5 |   22 |  101 | 1998-10-10 |
+| 32 | andy    |      8 | 25.5 |   74 |  103 | 1998-09-08 |
+| 32 | andy    |      8 | 25.5 |   64 |  102 | 1998-09-08 |
+| 32 | andy    |      8 | 25.5 |   64 |  101 | 1998-09-05 |
+| 32 | andy    |      8 | 25.5 |   31 |  104 | 1998-11-12 |
+| 32 | andy    |      8 | 25.5 |   31 |  103 | 1998-11-06 |
+| 32 | andy    |      8 | 25.5 |   31 |  102 | 1998-11-10 |
+| 32 | andy    |      8 | 25.5 |   22 |  104 | 1998-10-07 |
+| 32 | andy    |      8 | 25.5 |   22 |  103 | 1998-10-08 |
+| 32 | andy    |      8 | 25.5 |   22 |  102 | 1998-10-10 |
+| 32 | andy    |      8 | 25.5 |   22 |  101 | 1998-10-10 |
+| 58 | rusty   |     10 |   35 |   74 |  103 | 1998-09-08 |
+| 58 | rusty   |     10 |   35 |   64 |  102 | 1998-09-08 |
+| 58 | rusty   |     10 |   35 |   64 |  101 | 1998-09-05 |
+| 58 | rusty   |     10 |   35 |   31 |  104 | 1998-11-12 |
+| 58 | rusty   |     10 |   35 |   31 |  103 | 1998-11-06 |
+| 58 | rusty   |     10 |   35 |   31 |  102 | 1998-11-10 |
+| 58 | rusty   |     10 |   35 |   22 |  104 | 1998-10-07 |
+| 58 | rusty   |     10 |   35 |   22 |  103 | 1998-10-08 |
+| 58 | rusty   |     10 |   35 |   22 |  102 | 1998-10-10 |
+| 58 | rusty   |     10 |   35 |   22 |  101 | 1998-10-10 |
+| 64 | horatio |      7 |   35 |   74 |  103 | 1998-09-08 |
+| 64 | horatio |      7 |   35 |   64 |  102 | 1998-09-08 |
+| 64 | horatio |      7 |   35 |   64 |  101 | 1998-09-05 |
+| 64 | horatio |      7 |   35 |   31 |  104 | 1998-11-12 |
+| 64 | horatio |      7 |   35 |   31 |  103 | 1998-11-06 |
+| 64 | horatio |      7 |   35 |   31 |  102 | 1998-11-10 |
+| 64 | horatio |      7 |   35 |   22 |  104 | 1998-10-07 |
+| 64 | horatio |      7 |   35 |   22 |  103 | 1998-10-08 |
+| 64 | horatio |      7 |   35 |   22 |  102 | 1998-10-10 |
+| 64 | horatio |      7 |   35 |   22 |  101 | 1998-10-10 |
+| 71 | zorba   |     10 |   16 |   74 |  103 | 1998-09-08 |
+| 71 | zorba   |     10 |   16 |   64 |  102 | 1998-09-08 |
+| 71 | zorba   |     10 |   16 |   64 |  101 | 1998-09-05 |
+| 71 | zorba   |     10 |   16 |   31 |  104 | 1998-11-12 |
+| 71 | zorba   |     10 |   16 |   31 |  103 | 1998-11-06 |
+| 71 | zorba   |     10 |   16 |   31 |  102 | 1998-11-10 |
+| 71 | zorba   |     10 |   16 |   22 |  104 | 1998-10-07 |
+| 71 | zorba   |     10 |   16 |   22 |  103 | 1998-10-08 |
+| 71 | zorba   |     10 |   16 |   22 |  102 | 1998-10-10 |
+| 71 | zorba   |     10 |   16 |   22 |  101 | 1998-10-10 |
+| 74 | horatio |      9 |   40 |   74 |  103 | 1998-09-08 |
+| 74 | horatio |      9 |   40 |   64 |  102 | 1998-09-08 |
+| 74 | horatio |      9 |   40 |   64 |  101 | 1998-09-05 |
+| 74 | horatio |      9 |   40 |   31 |  104 | 1998-11-12 |
+| 74 | horatio |      9 |   40 |   31 |  103 | 1998-11-06 |
+| 74 | horatio |      9 |   40 |   31 |  102 | 1998-11-10 |
+| 74 | horatio |      9 |   40 |   22 |  104 | 1998-10-07 |
+| 74 | horatio |      9 |   40 |   22 |  103 | 1998-10-08 |
+| 74 | horatio |      9 |   40 |   22 |  102 | 1998-10-10 |
+| 74 | horatio |      9 |   40 |   22 |  101 | 1998-10-10 |
+| 85 | art     |      3 | 25.5 |   74 |  103 | 1998-09-08 |
+| 85 | art     |      3 | 25.5 |   64 |  102 | 1998-09-08 |
+| 85 | art     |      3 | 25.5 |   64 |  101 | 1998-09-05 |
+| 85 | art     |      3 | 25.5 |   31 |  104 | 1998-11-12 |
+| 85 | art     |      3 | 25.5 |   31 |  103 | 1998-11-06 |
+| 85 | art     |      3 | 25.5 |   31 |  102 | 1998-11-10 |
+| 85 | art     |      3 | 25.5 |   22 |  104 | 1998-10-07 |
+| 85 | art     |      3 | 25.5 |   22 |  103 | 1998-10-08 |
+| 85 | art     |      3 | 25.5 |   22 |  102 | 1998-10-10 |
+| 85 | art     |      3 | 25.5 |   22 |  101 | 1998-10-10 |
+| 95 | bob     |      3 | 63.5 |   74 |  103 | 1998-09-08 |
+| 95 | bob     |      3 | 63.5 |   64 |  102 | 1998-09-08 |
+| 95 | bob     |      3 | 63.5 |   64 |  101 | 1998-09-05 |
+| 95 | bob     |      3 | 63.5 |   31 |  104 | 1998-11-12 |
+| 95 | bob     |      3 | 63.5 |   31 |  103 | 1998-11-06 |
+| 95 | bob     |      3 | 63.5 |   31 |  102 | 1998-11-10 |
+| 95 | bob     |      3 | 63.5 |   22 |  104 | 1998-10-07 |
+| 95 | bob     |      3 | 63.5 |   22 |  103 | 1998-10-08 |
+| 95 | bob     |      3 | 63.5 |   22 |  102 | 1998-10-10 |
+| 95 | bob     |      3 | 63.5 |   22 |  101 | 1998-10-10 |
++----+---------+--------+------+------+------+------------+
+100 rows in set (0.00 sec)
+
+mysql> select * from sailor student where sailor.id=student.id;
+ERROR 1054 (42S22): Unknown column 'sailor.id' in 'where clause'
+mysql> select * from sailor,student where sailor.id=student.id;
++----+---------+--------+------+------+------+------------+
+| id | name    | rating | age  | id   | bid  | date       |
++----+---------+--------+------+------+------+------------+
+| 22 | dustin  |      7 |   45 |   22 |  101 | 1998-10-10 |
+| 22 | dustin  |      7 |   45 |   22 |  102 | 1998-10-10 |
+| 22 | dustin  |      7 |   45 |   22 |  103 | 1998-10-08 |
+| 22 | dustin  |      7 |   45 |   22 |  104 | 1998-10-07 |
+| 31 | lubber  |      8 | 55.5 |   31 |  102 | 1998-11-10 |
+| 31 | lubber  |      8 | 55.5 |   31 |  103 | 1998-11-06 |
+| 31 | lubber  |      8 | 55.5 |   31 |  104 | 1998-11-12 |
+| 64 | horatio |      7 |   35 |   64 |  101 | 1998-09-05 |
+| 64 | horatio |      7 |   35 |   64 |  102 | 1998-09-08 |
+| 74 | horatio |      9 |   40 |   74 |  103 | 1998-09-08 |
++----+---------+--------+------+------+------+------------+
+10 rows in set (0.01 sec)
+
+mysql> select * from sailor s,student r,boat b where s.id=r.id and r.bid=b.bid;
++----+---------+--------+------+------+------+------------+------+-----------+-------+
+| id | name    | rating | age  | id   | bid  | date       | bid  | bname     | color |
++----+---------+--------+------+------+------+------------+------+-----------+-------+
+| 22 | dustin  |      7 |   45 |   22 |  101 | 1998-10-10 |  101 | interlake | blue  |
+| 22 | dustin  |      7 |   45 |   22 |  102 | 1998-10-10 |  102 | interlake | red   |
+| 22 | dustin  |      7 |   45 |   22 |  103 | 1998-10-08 |  103 | clipper   | green |
+| 22 | dustin  |      7 |   45 |   22 |  104 | 1998-10-07 |  104 | marine    | red   |
+| 31 | lubber  |      8 | 55.5 |   31 |  102 | 1998-11-10 |  102 | interlake | red   |
+| 31 | lubber  |      8 | 55.5 |   31 |  103 | 1998-11-06 |  103 | clipper   | green |
+| 31 | lubber  |      8 | 55.5 |   31 |  104 | 1998-11-12 |  104 | marine    | red   |
+| 64 | horatio |      7 |   35 |   64 |  101 | 1998-09-05 |  101 | interlake | blue  |
+| 64 | horatio |      7 |   35 |   64 |  102 | 1998-09-08 |  102 | interlake | red   |
+| 74 | horatio |      9 |   40 |   74 |  103 | 1998-09-08 |  103 | clipper   | green |
++----+---------+--------+------+------+------+------------+------+-----------+-------+
+10 rows in set (0.00 sec)
+
+mysql> select * from sailor s,student r where sailor.id=student.id;
+ERROR 1054 (42S22): Unknown column 'sailor.id' in 'where clause'
+mysql> select * from sailor s,student r where s.id=r.id;
++----+---------+--------+------+------+------+------------+
+| id | name    | rating | age  | id   | bid  | date       |
++----+---------+--------+------+------+------+------------+
+| 22 | dustin  |      7 |   45 |   22 |  101 | 1998-10-10 |
+| 22 | dustin  |      7 |   45 |   22 |  102 | 1998-10-10 |
+| 22 | dustin  |      7 |   45 |   22 |  103 | 1998-10-08 |
+| 22 | dustin  |      7 |   45 |   22 |  104 | 1998-10-07 |
+| 31 | lubber  |      8 | 55.5 |   31 |  102 | 1998-11-10 |
+| 31 | lubber  |      8 | 55.5 |   31 |  103 | 1998-11-06 |
+| 31 | lubber  |      8 | 55.5 |   31 |  104 | 1998-11-12 |
+| 64 | horatio |      7 |   35 |   64 |  101 | 1998-09-05 |
+| 64 | horatio |      7 |   35 |   64 |  102 | 1998-09-08 |
+| 74 | horatio |      9 |   40 |   74 |  103 | 1998-09-08 |
++----+---------+--------+------+------+------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select name,date from sailor s,student r,boat b where s.id=r.id and r.bid=b.bid;
++---------+------------+
+| name    | date       |
++---------+------------+
+| dustin  | 1998-10-10 |
+| dustin  | 1998-10-10 |
+| dustin  | 1998-10-08 |
+| dustin  | 1998-10-07 |
+| lubber  | 1998-11-10 |
+| lubber  | 1998-11-06 |
+| lubber  | 1998-11-12 |
+| horatio | 1998-09-05 |
+| horatio | 1998-09-08 |
+| horatio | 1998-09-08 |
++---------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select name,date from sailor s,student r,boat b where s.id=r.id and b.id=103;
+ERROR 1054 (42S22): Unknown column 'b.id' in 'where clause'
+mysql> select name,date from sailor s,student r,boat b where s.id=r.id and r.bid=b.bid where bid=103;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where bid=103' at line 1
+mysql> select name,date from sailor s,student r,boat b where s.id=r.id and r.bid=b.bid and b.bid=103;
++---------+------------+
+| name    | date       |
++---------+------------+
+| dustin  | 1998-10-08 |
+| lubber  | 1998-11-06 |
+| horatio | 1998-09-08 |
++---------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select color from sailor s,student r,boat b where s.id=r.id and r.bid=b.bid and name='lubber';
++-------+
+| color |
++-------+
+| red   |
+| green |
+| red   |
++-------+
+3 rows in set (0.00 sec)
+
+mysql> select color from sailor s,student r,boat b where s.id=r.id and r.bid=b.bid and name='dustin';
++-------+
+| color |
++-------+
+| blue  |
+| red   |
+| green |
+| red   |
++-------+
+4 rows in set (0.00 sec)
+
+mysql> select rating,max(age) from sailor group by rating;
++--------+----------+
+| rating | max(age) |
++--------+----------+
+|      7 |       45 |
+|      1 |       33 |
+|      8 |     55.5 |
+|     10 |       35 |
+|      9 |       40 |
+|      3 |     63.5 |
++--------+----------+
+6 rows in set (0.01 sec)
+
+mysql> select rating,count(*) from sailor group by rating;
++--------+----------+
+| rating | count(*) |
++--------+----------+
+|      7 |        2 |
+|      1 |        1 |
+|      8 |        2 |
+|     10 |        2 |
+|      9 |        1 |
+|      3 |        2 |
++--------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select rating,count(*),max(age) from sailor group by rating;
++--------+----------+----------+
+| rating | count(*) | max(age) |
++--------+----------+----------+
+|      7 |        2 |       45 |
+|      1 |        1 |       33 |
+|      8 |        2 |     55.5 |
+|     10 |        2 |       35 |
+|      9 |        1 |       40 |
+|      3 |        2 |     63.5 |
++--------+----------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select rating,count(*) from sailor group by rating;
++--------+----------+
+| rating | count(*) |
++--------+----------+
+|      7 |        2 |
+|      1 |        1 |
+|      8 |        2 |
+|     10 |        2 |
+|      9 |        1 |
+|      3 |        2 |
++--------+----------+
+6 rows in set (0.01 sec)
+
+mysql> select rating,count(*) from sailor group by rating having count(*)=1;
++--------+----------+
+| rating | count(*) |
++--------+----------+
+|      1 |        1 |
+|      9 |        1 |
++--------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select rating,count(*) from sailor group by rating having count(*)=2;
++--------+----------+
+| rating | count(*) |
++--------+----------+
+|      7 |        2 |
+|      8 |        2 |
+|     10 |        2 |
+|      3 |        2 |
++--------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select name from sailor where id in(select id from student group by id having count(bid)<=2);
++---------+
+| name    |
++---------+
+| horatio |
+| horatio |
++---------+
+2 rows in set (0.00 sec)
+
+mysql> select name from sailor where id in(select id from student group by id having count(bid)<=1);
++---------+
+| name    |
++---------+
+| horatio |
++---------+
+1 row in set (0.01 sec)
+
+mysql> select name from sailor where id in(select id from student where bid in(select bid from boat where color='red'not in(color='green'));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select name from sailor where id in(select id from student where bid in(select bid from boat where color='red'not in(color='green')));
++---------+
+| name    |
++---------+
+| dustin  |
+| lubber  |
+| horatio |
++---------+
+3 rows in set, 5 warnings (0.00 sec)
+
+mysql> select name from sailor s.student r,boat b where s.id=r.id and r.bid=b.bid and s.age<50 and color='green';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.student r,boat b where s.id=r.id and r.bid=b.bid and s.age<50 and color='green'' at line 1
+mysql> select name from sailor s,student r,boat b where s.id=r.id and r.bid=b.bid and s.age<50 and color='green';
++---------+
+| name    |
++---------+
+| dustin  |
+| horatio |
++---------+
+2 rows in set (0.00 sec)
+
+mysql> select bid from sailor s,student r,boat b where s.id=r.id and r.bid=b.bid and name!='lubber';
+ERROR 1052 (23000): Column 'bid' in field list is ambiguous
+mysql> select bid from boat b,student r,sailor s where s.id=r.id and r.bid=b.bid and name!='lubber';
+ERROR 1052 (23000): Column 'bid' in field list is ambiguous
+mysql> select bid from boat b,student r,sailor s where s.id=r.id and r.bid=b.bid and name not='lubber';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '='lubber'' at line 1
+mysql> select name from sailor where id in(select id from student group by id having count(bid)<=4);
++---------+
+| name    |
++---------+
+| dustin  |
+| lubber  |
+| horatio |
+| horatio |
++---------+
+4 rows in set (0.00 sec)
+
+mysql> select name from sailor where id in(select id from student group by id having count(bid)(select count(*)from boat));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(select count(*)from boat))' at line 1
+mysql> select name from sailor where id in(select id from student group by id having count)=(select count(*)from boat));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> select name from sailor where id in(select id from student group by id having count(bid)=(select count(*)from boat));
++--------+
+| name   |
++--------+
+| dustin |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select bid from boat where bid not in(select bid from student where id in(select id from sailor where name='lubber'));
++------+
+| bid  |
++------+
+|  101 |
++------+
+1 row in set (0.01 sec)
+
+mysql> select name from sailor s,student r1,student s2 where s.id=r1.id and r1.id=r2.id and r1.bid!=r2.bid;
+ERROR 1054 (42S22): Unknown column 'r2.id' in 'where clause'
+mysql> select name from sailor s,student r1,student r2 where s.id=r1.id and r1.id=r2.id and r1.bid!=r2.bid;
++---------+
+| name    |
++---------+
+| dustin  |
+| dustin  |
+| dustin  |
+| dustin  |
+| dustin  |
+| dustin  |
+| dustin  |
+| dustin  |
+| dustin  |
+| dustin  |
+| dustin  |
+| dustin  |
+| lubber  |
+| lubber  |
+| lubber  |
+| lubber  |
+| lubber  |
+| lubber  |
+| horatio |
+| horatio |
++---------+
+20 rows in set (0.00 sec)
+
+mysql> select name,count(*) from sailor s,student r1,student r2 where s.id=r1.id and r1.id=r2.id and r1.bid!=r2.bid;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'student.s.name'; this is incompatible with sql_mode=only_full_group_by
+mysql> select name from sailor where id in(select id from student group by id having count(name)='dustin');
+Empty set, 1 warning (0.01 sec)
+
+mysql> select id from sailor where id in(select id from student group by id having count(name)='dustin');
+Empty set, 1 warning (0.00 sec)
+
+mysql> select name from sailor where id in(select id from student where bid in(select bid from boat where bid=103));
++---------+
+| name    |
++---------+
+| dustin  |
+| lubber  |
+| horatio |
++---------+
+3 rows in set (0.00 sec)
+
+mysql> select name from sailor s where EXISTS(select * from student r where bid=103 and s.id=r.id);
++---------+
+| name    |
++---------+
+| dustin  |
+| lubber  |
+| horatio |
++---------+
+3 rows in set (0.00 sec)
+
+mysql> select name from sailor s where EXISTS(select * from student r where bid=103 and s.id=22);
++--------+
+| name   |
++--------+
+| dustin |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select name from sailor where exists(select id from student group by id having count(bid)<=1);
++---------+
+| name    |
++---------+
+| dustin  |
+| brutus  |
+| lubber  |
+| andy    |
+| rusty   |
+| horatio |
+| zorba   |
+| horatio |
+| art     |
+| bob     |
++---------+
+10 rows in set (0.00 sec)
+
+mysql> select name from sailor where not exists(select id from student group by id having count(bid)<=1);
+Empty set (0.00 sec)
+
+mysql> select name from sailor where exists(select id from student where bid);
++---------+
+| name    |
++---------+
+| dustin  |
+| brutus  |
+| lubber  |
+| andy    |
+| rusty   |
+| horatio |
+| zorba   |
+| horatio |
+| art     |
+| bob     |
++---------+
+10 rows in set (0.00 sec)
+
+mysql> select name from sailor where exists(select id from student where bid=1);
+Empty set (0.00 sec)
+
+mysql> select name from sailor where not exists(select id from student group by id having count(bid)=1);
+Empty set (0.00 sec)
+
+mysql> select name from sailor where id not in(select bid from student where bid);
++---------+
+| name    |
++---------+
+| dustin  |
+| brutus  |
+| lubber  |
+| andy    |
+| rusty   |
+| horatio |
+| zorba   |
+| horatio |
+| art     |
+| bob     |
++---------+
+10 rows in set (0.00 sec)
+
+mysql> 
+mysql> select color from sailor s,reserve r,boat b where s.id=r.id and r.bid=b.bid and name='lubber';
++-------+
+| color |
++-------+
+| red   |
+| green |
+| red   |
++-------+
+3 rows in set (0.01 sec)
+
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| dbms               |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sports             |
+| student            |
+| sys                |
+| university         |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> use student;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select name from sailor where id IN(select id from reserve where bid=103);
++---------+
+| name    |
++---------+
+| dustin  |
+| lubber  |
+| horatio |
++---------+
+3 rows in set (0.01 sec)
+
+mysql> select name from sailor s where EXISTS(select * from reserve where bid=103 and id=s.sid)
+    -> ;
+ERROR 1054 (42S22): Unknown column 's.sid' in 'where clause'
+mysql> select name from sailor s where EXISTS(select * from reserve where bid=103 and id=s.id);
++---------+
+| name    |
++---------+
+| dustin  |
+| lubber  |
+| horatio |
++---------+
+3 rows in set (0.00 sec)
+
+mysql> select name from sailor s where EXISTS(select * from reserve where bid and id=s.id);
++---------+
+| name    |
++---------+
+| dustin  |
+| lubber  |
+| horatio |
+| horatio |
++---------+
+4 rows in set (0.00 sec)
+
+mysql> select * from sailor;
++----+---------+--------+------+----------+
+| id | name    | rating | age  | address  |
++----+---------+--------+------+----------+
+| 22 | dustin  |      7 |   45 | houseton |
+| 29 | brutus  |      1 |   33 | NULL     |
+| 31 | lubber  |      8 | 55.5 | NULL     |
+| 32 | andy    |      8 | 25.5 | NULL     |
+| 58 | rusty   |     10 |   35 | NULL     |
+| 64 | horatio |      7 |   35 | NULL     |
+| 71 | zorba   |     10 |   16 | NULL     |
+| 74 | horatio |      9 |   40 | NULL     |
+| 85 | art     |      3 | 25.5 | NULL     |
+| 95 | bob     |      3 | 63.5 | NULL     |
++----+---------+--------+------+----------+
+10 rows in set (0.00 sec)
+
+mysql> select * from reserve;
++------+------+------------+
+| id   | bid  | date       |
++------+------+------------+
+|   22 |  101 | 1998-10-10 |
+|   22 |  102 | 1998-10-10 |
+|   22 |  103 | 1998-10-08 |
+|   22 |  104 | 1998-10-07 |
+|   31 |  102 | 1998-11-10 |
+|   31 |  103 | 1998-11-06 |
+|   31 |  104 | 1998-11-12 |
+|   64 |  101 | 1998-09-05 |
+|   64 |  102 | 1998-09-08 |
+|   74 |  103 | 1998-09-08 |
++------+------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select * from boat;
++------+-----------+-------+
+| bid  | bname     | color |
++------+-----------+-------+
+|  101 | interlake | blue  |
+|  102 | interlake | red   |
+|  103 | clipper   | green |
+|  104 | marine    | red   |
++------+-----------+-------+
+4 rows in set (0.01 sec)
+
+mysql> select name from sailor s where NOT EXISTS(select * from reserve where bid and id=s.id);
++--------+
+| name   |
++--------+
+| brutus |
+| andy   |
+| rusty  |
+| zorba  |
+| art    |
+| bob    |
++--------+
+6 rows in set (0.00 sec)
+
+mysql> select name from sailor s where EXISTS(select * from reserve where count(bid) and id=s.id);
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select name from sailor s where NOT EXISTS(select bid from boat)EXCEPT(select bid from reserve where id=s.id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> select name from sailor s where NOT EXISTS((select bid from boat)EXCEPT(select bid from reserve where id=s.id));
++--------+
+| name   |
++--------+
+| dustin |
++--------+
+1 row in set (0.01 sec)
+
+mysql> select name from sailor s where NOT EXISTS((select bid from boat='red')EXCEPT(select bid from reserve where id=s.id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '='red')EXCEPT(select bid from reserve where id=s.id))' at line 1
+mysql> select name from sailor s where EXISTS((select bid from boat='red')EXCEPT(select bid from reserve where id=s.id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '='red')EXCEPT(select bid from reserve where id=s.id))' at line 1
+mysql> select name from sailor s where EXISTS((select color from boat='red')EXCEPT(select bid from reserve where id=s.id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '='red')EXCEPT(select bid from reserve where id=s.id))' at line 1
+
+
+mysql> select name from sailor s where NOT EXISTS((select id from sailor)EXCEPT(select id from reserve where id=s.id));
+Empty set (0.01 sec)
+mysql> select name from sailor where id IN(select id from reserve where bid=103);
++---------+
+| name    |
++---------+
+| dustin  |
+| lubber  |
+| horatio |
++---------+
+3 rows in set (0.01 sec)
+
+mysql> select name from sailor s where EXISTS(select * from reserve where bid=103 and id=s.sid)
+    -> ;
+ERROR 1054 (42S22): Unknown column 's.sid' in 'where clause'
+mysql> select name from sailor s where EXISTS(select * from reserve where bid=103 and id=s.id);
++---------+
+| name    |
++---------+
+| dustin  |
+| lubber  |
+| horatio |
++---------+
+3 rows in set (0.00 sec)
+
+mysql> select name from sailor s where EXISTS(select * from reserve where bid and id=s.id);
++---------+
+| name    |
++---------+
+| dustin  |
+| lubber  |
+| horatio |
+| horatio |
++---------+
+4 rows in set (0.00 sec)
+
+mysql> select * from sailor;
++----+---------+--------+------+----------+
+| id | name    | rating | age  | address  |
++----+---------+--------+------+----------+
+| 22 | dustin  |      7 |   45 | houseton |
+| 29 | brutus  |      1 |   33 | NULL     |
+| 31 | lubber  |      8 | 55.5 | NULL     |
+| 32 | andy    |      8 | 25.5 | NULL     |
+| 58 | rusty   |     10 |   35 | NULL     |
+| 64 | horatio |      7 |   35 | NULL     |
+| 71 | zorba   |     10 |   16 | NULL     |
+| 74 | horatio |      9 |   40 | NULL     |
+| 85 | art     |      3 | 25.5 | NULL     |
+| 95 | bob     |      3 | 63.5 | NULL     |
++----+---------+--------+------+----------+
+10 rows in set (0.00 sec)
+
+mysql> select * from reserve;
++------+------+------------+
+| id   | bid  | date       |
++------+------+------------+
+|   22 |  101 | 1998-10-10 |
+|   22 |  102 | 1998-10-10 |
+|   22 |  103 | 1998-10-08 |
+|   22 |  104 | 1998-10-07 |
+|   31 |  102 | 1998-11-10 |
+|   31 |  103 | 1998-11-06 |
+|   31 |  104 | 1998-11-12 |
+|   64 |  101 | 1998-09-05 |
+|   64 |  102 | 1998-09-08 |
+|   74 |  103 | 1998-09-08 |
++------+------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select * from boat;
++------+-----------+-------+
+| bid  | bname     | color |
++------+-----------+-------+
+|  101 | interlake | blue  |
+|  102 | interlake | red   |
+|  103 | clipper   | green |
+|  104 | marine    | red   |
++------+-----------+-------+
+4 rows in set (0.01 sec)
+
+mysql> select name from sailor s where NOT EXISTS(select * from reserve where bid and id=s.id);
++--------+
+| name   |
++--------+
+| brutus |
+| andy   |
+| rusty  |
+| zorba  |
+| art    |
+| bob    |
++--------+
+6 rows in set (0.00 sec)
+
+mysql> select name from sailor s where EXISTS(select * from reserve where count(bid) and id=s.id);
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select name from sailor s where NOT EXISTS(select bid from boat)EXCEPT(select bid from reserve where id=s.id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> select name from sailor s where NOT EXISTS((select bid from boat)EXCEPT(select bid from reserve where id=s.id));
++--------+
+| name   |
++--------+
+| dustin |
++--------+
+1 row in set (0.01 sec)
+
+mysql> select name from sailor s where NOT EXISTS((select bid from boat='red')EXCEPT(select bid from reserve where id=s.id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '='red')EXCEPT(select bid from reserve where id=s.id))' at line 1
+mysql> select name from sailor s where EXISTS((select bid from boat='red')EXCEPT(select bid from reserve where id=s.id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '='red')EXCEPT(select bid from reserve where id=s.id))' at line 1
+mysql> select name from sailor s where EXISTS((select color from boat='red')EXCEPT(select bid from reserve where id=s.id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '='red')EXCEPT(select bid from reserve where id=s.id))' at line 1
+mysql> select name from sailor s where NOT EXISTS((select id from sailor)EXCEPT(select id from reserve where id=s.id));
+Empty set (0.01 sec)
+
+mysql> select name from sailor s where NOT EXISTS((select bid from boat)EXCEPT(select bid from reserve where id=s.id));
++--------+
+| name   |
++--------+
+| dustin |
++--------+
+1 row in set (0.00 sec)
+
+
+mysql> select name from sailor s where NOT EXISTS((select bid from boat)EXCEPT(select bid from reserve where id=s.id));
++--------+
+| name   |
++--------+
+| dustin |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select name from sailor s where NOT EXISTS((select bid from boat where color='red')EXCEPT(select bid from reserve where id=s.id));
++--------+
+| name   |
++--------+
+| dustin |
+| lubber |
++--------+
+2 rows in set (0.00 sec)
+
+mysql> select name from sailor s where NOT EXISTS((select bid from boat where bname='interlake')EXCEPT(select bid from reserve where id=s.id));
++---------+
+| name    |
++---------+
+| dustin  |
+| horatio |
++---------+
+2 rows in set (0.00 sec)
+
+mysql> select name from sailor s where NOT EXISTS((select bid from boat where color='green')EXCEPT(select bid from reserve where id=s.id));
++---------+
+| name    |
++---------+
+| dustin  |
+| lubber  |
+| horatio |
++---------+
+3 rows in set (0.00 sec)
+
+mysql> 
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| dbms               |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sports             |
+| student            |
+| sys                |
+| university         |
++--------------------+
+8 rows in set (0.01 sec)
+
+mysql> use university;
+Database changed
+mysql> select * from sailor s,reserve r where s.id=r.id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> select * from sailor s,reserve r where s.id=r.id;
+ERROR 1146 (42S02): Table 'university.sailor' doesn't exist
+mysql> use student;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select * from sailor s,reserve r where s.id=r.id;
++----+---------+--------+------+----------+------+------+------------+
+| id | name    | rating | age  | address  | id   | bid  | date       |
++----+---------+--------+------+----------+------+------+------------+
+| 22 | dustin  |      7 |   45 | houseton |   22 |  101 | 1998-10-10 |
+| 22 | dustin  |      7 |   45 | houseton |   22 |  102 | 1998-10-10 |
+| 22 | dustin  |      7 |   45 | houseton |   22 |  103 | 1998-10-08 |
+| 22 | dustin  |      7 |   45 | houseton |   22 |  104 | 1998-10-07 |
+| 31 | lubber  |      8 | 55.5 | NULL     |   31 |  102 | 1998-11-10 |
+| 31 | lubber  |      8 | 55.5 | NULL     |   31 |  103 | 1998-11-06 |
+| 31 | lubber  |      8 | 55.5 | NULL     |   31 |  104 | 1998-11-12 |
+| 64 | horatio |      7 |   35 | NULL     |   64 |  101 | 1998-09-05 |
+| 64 | horatio |      7 |   35 | NULL     |   64 |  102 | 1998-09-08 |
+| 74 | horatio |      9 |   40 | NULL     |   74 |  103 | 1998-09-08 |
++----+---------+--------+------+----------+------+------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select * from sailor s JOIN reserve r where s.id=r.id;
++----+---------+--------+------+----------+------+------+------------+
+| id | name    | rating | age  | address  | id   | bid  | date       |
++----+---------+--------+------+----------+------+------+------------+
+| 22 | dustin  |      7 |   45 | houseton |   22 |  101 | 1998-10-10 |
+| 22 | dustin  |      7 |   45 | houseton |   22 |  102 | 1998-10-10 |
+| 22 | dustin  |      7 |   45 | houseton |   22 |  103 | 1998-10-08 |
+| 22 | dustin  |      7 |   45 | houseton |   22 |  104 | 1998-10-07 |
+| 31 | lubber  |      8 | 55.5 | NULL     |   31 |  102 | 1998-11-10 |
+| 31 | lubber  |      8 | 55.5 | NULL     |   31 |  103 | 1998-11-06 |
+| 31 | lubber  |      8 | 55.5 | NULL     |   31 |  104 | 1998-11-12 |
+| 64 | horatio |      7 |   35 | NULL     |   64 |  101 | 1998-09-05 |
+| 64 | horatio |      7 |   35 | NULL     |   64 |  102 | 1998-09-08 |
+| 74 | horatio |      9 |   40 | NULL     |   74 |  103 | 1998-09-08 |
++----+---------+--------+------+----------+------+------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select * from sailor s LEFT JOIN reserve r where s.id=r.id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where s.id=r.id' at line 1
+mysql> select * from sailor s LEFTJOIN reserve r where s.id=r.id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'LEFTJOIN reserve r where s.id=r.id' at line 1
+mysql> select * from sailor s left JOIN reserve r where s.id=r.id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where s.id=r.id' at line 1
+mysql> select * from sailor s left JOIN reserve r on s.id=r.id;
++----+---------+--------+------+----------+------+------+------------+
+| id | name    | rating | age  | address  | id   | bid  | date       |
++----+---------+--------+------+----------+------+------+------------+
+| 22 | dustin  |      7 |   45 | houseton |   22 |  101 | 1998-10-10 |
+| 22 | dustin  |      7 |   45 | houseton |   22 |  102 | 1998-10-10 |
+| 22 | dustin  |      7 |   45 | houseton |   22 |  103 | 1998-10-08 |
+| 22 | dustin  |      7 |   45 | houseton |   22 |  104 | 1998-10-07 |
+| 29 | brutus  |      1 |   33 | NULL     | NULL | NULL | NULL       |
+| 31 | lubber  |      8 | 55.5 | NULL     |   31 |  102 | 1998-11-10 |
+| 31 | lubber  |      8 | 55.5 | NULL     |   31 |  103 | 1998-11-06 |
+| 31 | lubber  |      8 | 55.5 | NULL     |   31 |  104 | 1998-11-12 |
+| 32 | andy    |      8 | 25.5 | NULL     | NULL | NULL | NULL       |
+| 58 | rusty   |     10 |   35 | NULL     | NULL | NULL | NULL       |
+| 64 | horatio |      7 |   35 | NULL     |   64 |  101 | 1998-09-05 |
+| 64 | horatio |      7 |   35 | NULL     |   64 |  102 | 1998-09-08 |
+| 71 | zorba   |     10 |   16 | NULL     | NULL | NULL | NULL       |
+| 74 | horatio |      9 |   40 | NULL     |   74 |  103 | 1998-09-08 |
+| 85 | art     |      3 | 25.5 | NULL     | NULL | NULL | NULL       |
+| 95 | bob     |      3 | 63.5 | NULL     | NULL | NULL | NULL       |
++----+---------+--------+------+----------+------+------+------------+
+16 rows in set (0.01 sec)
+
+mysql> select * from sailor s left JOIN reserve r on s.id=r.id group by s.id;
+ERROR 1055 (42000): Expression #7 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'student.r.bid' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> select * from sailor s left JOIN reserve r on s.id=r.id group by s.(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(id)' at line 1
+mysql> select count(*),s.id from sailor left JOIN reserve r on s.id=r.id group by s.id;
+ERROR 1054 (42S22): Unknown column 's.id' in 'field list'
+mysql> select count(*),s.id from sailor s left JOIN reserve r on s.id=r.id group by s.id;
++----------+----+
+| count(*) | id |
++----------+----+
+|        4 | 22 |
+|        1 | 29 |
+|        3 | 31 |
+|        1 | 32 |
+|        1 | 58 |
+|        2 | 64 |
+|        1 | 71 |
+|        1 | 74 |
+|        1 | 85 |
+|        1 | 95 |
++----------+----+
+10 rows in set (0.00 sec)
+
+mysql> select id,count(bid) from sailor s left JOIN reserve r on s.id=r.id group by s.id;
+ERROR 1052 (23000): Column 'id' in field list is ambiguous
+mysql> select s.id,count(bid) from sailor s left JOIN reserve r on s.id=r.id group by s.id;
++----+------------+
+| id | count(bid) |
++----+------------+
+| 22 |          4 |
+| 29 |          0 |
+| 31 |          3 |
+| 32 |          0 |
+| 58 |          0 |
+| 64 |          2 |
+| 71 |          0 |
+| 74 |          1 |
+| 85 |          0 |
+| 95 |          0 |
++----+------------+
+10 rows in set (0.00 sec)
+
+mysql> select s.id,count(bid) from sailor s inner JOIN reserve r on s.id=r.id group by s.id;
++----+------------+
+| id | count(bid) |
++----+------------+
+| 22 |          4 |
+| 31 |          3 |
+| 64 |          2 |
+| 74 |          1 |
++----+------------+
+4 rows in set (0.00 sec)
+
+mysql> select s.id,count(bid) from sailor s outer JOIN reserve r on s.id=r.id group by s.id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'outer JOIN reserve r on s.id=r.id group by s.id' at line 1
+mysql> select s.id,count(bid) from sailor s right JOIN reserve r on s.id=r.id group by s.id;
++------+------------+
+| id   | count(bid) |
++------+------------+
+|   22 |          4 |
+|   31 |          3 |
+|   64 |          2 |
+|   74 |          1 |
++------+------------+
+4 rows in set (0.00 sec)
+
+mysql> 
+mysql> select max(t.c) from(select id as s,count(bid) as c from reserve group by id) as t;
++----------+
+| max(t.c) |
++----------+
+|        4 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select max(t.s) from(select id as s,count(bid) as c from reserve group by id) as t;
++----------+
+| max(t.s) |
++----------+
+|       74 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select id,count(bid) from reserve group by id having count(bid)=(select max(t.c) from(select id as s,count(bid) as c from reserve group by id) as t);
++------+------------+
+| id   | count(bid) |
++------+------------+
+|   22 |          4 |
++------+------------+
+1 row in set (0.01 sec)
+
+mysql> select id,count(bid) from reserve group bu id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'bu id' at line 1
+mysql> select id,count(bid) from reserve group by id;
++------+------------+
+| id   | count(bid) |
++------+------------+
+|   22 |          4 |
+|   31 |          3 |
+|   64 |          2 |
+|   74 |          1 |
++------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select id,count(bid) from reserve group by id having count(bid)=(select min(t.c) from(select id as s,count(bid) as c from reserve group by id) as t);
++------+------------+
+| id   | count(bid) |
++------+------------+
+|   74 |          1 |
++------+------------+
+1 row in set (0.00 sec)
+
+mysql> 
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,188 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| college            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sailor             |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> use sailor;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+
+mysql> insert into sailor values(32,'Andy',8,55.5);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into sailor values(58,'Rusty',10,35);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into sailor values(64,'Horatio',7,35);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into sailor values(71,'Zorba',10,16);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into sailor values(74,'Horatio',9,40);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into sailor values(85,'Art',3,25.5);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into sailor values(95,'Bob',3,63.5);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from sailor;
++------+---------+--------+------+
+| id   | name    | rating | age  |
++------+---------+--------+------+
+|   22 | Dustin  |      7 |   45 |
+|   29 | Brutus  |      1 |   33 |
+|   31 | Lubber  |      8 | 55.5 |
+|   32 | Andy    |      8 | 25.5 |
+|   32 | Andy    |      8 | 55.5 |
+|   58 | Rusty   |     10 |   35 |
+|   64 | Horatio |      7 |   35 |
+|   71 | Zorba   |     10 |   16 |
+|   74 | Horatio |      9 |   40 |
+|   85 | Art     |      3 | 25.5 |
+|   95 | Bob     |      3 | 63.5 |
++------+---------+--------+------+
+11 rows in set (0.00 sec)
+
+
+mysql> select * from sailor where id=22;
++------+--------+--------+------+
+| id   | name   | rating | age  |
++------+--------+--------+------+
+|   22 | Dustin |      7 |   45 |
++------+--------+--------+------+
+1 row in set (0.00 sec)
+
+
+mysql> select * from sailor where name like 'B%';
++------+--------+--------+------+
+| id   | name   | rating | age  |
++------+--------+--------+------+
+|   29 | Brutus |      1 |   33 |
+|   95 | Bob    |      3 | 63.5 |
++------+--------+--------+------+
+2 rows in set (0.00 sec)
+
+mysql> select id from sailor where rating=9;
++------+
+| id   |
++------+
+|   74 |
++------+
+1 row in set (0.00 sec)
+
+mysql> select id from sailor where age <=45;
++------+
+| id   |
++------+
+|   22 |
+|   29 |
+|   32 |
+|   58 |
+|   64 |
+|   71 |
+|   74 |
+|   85 |
++------+
+8 rows in set (0.00 sec)
+
+mysql> select * from sailor order by name asc;
++------+---------+--------+------+
+| id   | name    | rating | age  |
++------+---------+--------+------+
+|   32 | Andy    |      8 | 25.5 |
+|   32 | Andy    |      8 | 55.5 |
+|   85 | Art     |      3 | 25.5 |
+|   95 | Bob     |      3 | 63.5 |
+|   29 | Brutus  |      1 |   33 |
+|   22 | Dustin  |      7 |   45 |
+|   64 | Horatio |      7 |   35 |
+|   74 | Horatio |      9 |   40 |
+|   31 | Lubber  |      8 | 55.5 |
+|   58 | Rusty   |     10 |   35 |
+|   71 | Zorba   |     10 |   16 |
++------+---------+--------+------+
+11 rows in set (0.00 sec)
+
+mysql> select * from sailor order by name desc;
++------+---------+--------+------+
+| id   | name    | rating | age  |
++------+---------+--------+------+
+|   71 | Zorba   |     10 |   16 |
+|   58 | Rusty   |     10 |   35 |
+|   31 | Lubber  |      8 | 55.5 |
+|   64 | Horatio |      7 |   35 |
+|   74 | Horatio |      9 |   40 |
+|   22 | Dustin  |      7 |   45 |
+|   29 | Brutus  |      1 |   33 |
+|   95 | Bob     |      3 | 63.5 |
+|   85 | Art     |      3 | 25.5 |
+|   32 | Andy    |      8 | 25.5 |
+|   32 | Andy    |      8 | 55.5 |
++------+---------+--------+------+
+11 rows in set (0.00 sec)
+
+mysql> select * from sailor order by rating limit 3;
++------+--------+--------+------+
+| id   | name   | rating | age  |
++------+--------+--------+------+
+|   29 | Brutus |      1 |   33 |
+|   85 | Art    |      3 | 25.5 |
+|   95 | Bob    |      3 | 63.5 |
++------+--------+--------+------+
+3 rows in set (0.00 sec)
+
+mysql> select avg(rating) from sailor;
++-------------+
+| avg(rating) |
++-------------+
+|      6.7273 |
++-------------+
+1 row in set (0.00 sec)
+
+
+mysql> select * from sailor where name like '%r%';
++------+---------+--------+------+
+| id   | name    | rating | age  |
++------+---------+--------+------+
+|   29 | Brutus  |      1 |   33 |
+|   31 | Lubber  |      8 | 55.5 |
+|   58 | Rusty   |     10 |   35 |
+|   64 | Horatio |      7 |   35 |
+|   71 | Zorba   |     10 |   16 |
+|   74 | Horatio |      9 |   40 |
+|   85 | Art     |      3 | 25.5 |
++------+---------+--------+------+
+7 rows in set (0.00 sec)
+
+mysql> select * from sailor where name like 'B%' and rating='3';
++------+------+--------+------+
+| id   | name | rating | age  |
++------+------+--------+------+
+|   95 | Bob  |      3 | 63.5 |
++------+------+--------+------+
+1 row in set (0.00 sec)
+
+mysql> select * from sailor where age=33;
++------+--------+--------+------+
+| id   | name   | rating | age  |
++------+--------+--------+------+
+|   29 | Brutus |      1 |   33 |
++------+--------+--------+------+
+1 row in set (0.00 sec)
+
+mysql> 
+
+
